@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Pro Fitness</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="register_text">Don't have an account? <font color='#00E5FF'>Register</font></string>
+
+
+    <string name="step_indicator">STEP 1 OF 2</string>
+    <string name="join_team">Join the\n<font color='#00E5FF'>Pro Team</font></string>
+    <string name="register_sub">Start your journey to elite fitness today.</string>
+    <string name="terms_text">By creating an account, I agree to the <font color='#00E5FF'>Terms of Service</font> and <font color='#00E5FF'>Privacy Policy</font>.</string>
+
+    <string name="step_2_5">STEP 2/5</string>
+    <string name="goals_title">What is your primary goal?</string>
+    <string name="goals_sub">Choose one to help us tailor your pro-fitness experience.</string>
+
+
+</resources>
+
