@@ -1,5 +1,6 @@
 package com.example.profitness;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -30,6 +31,12 @@ public class exercise_details extends AppCompatActivity {
         if (exerciseName != null && !exerciseName.trim().isEmpty()) {
             tvTitle.setText(exerciseName);
         }
+
+        findViewById(R.id.fab_add_to_workout).setOnClickListener(v -> {
+            Intent intent = new Intent(exercise_details.this, active_workout.class);
+            intent.putExtra("prefill_workout_name", tvTitle.getText().toString());
+            startActivity(intent);
+        });
 
         TextView tagsText = findViewById(R.id.exercise_title);
         tagsText.setContentDescription((muscle != null ? muscle : "General") + " • "
