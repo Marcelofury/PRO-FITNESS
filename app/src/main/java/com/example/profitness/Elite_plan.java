@@ -78,6 +78,8 @@ public class Elite_plan extends AppCompatActivity {
                     if (AuthSessionHelper.handleIfAuthExpired(Elite_plan.this, errorMessage)) {
                         return;
                     }
+                    tvPlanTitle.setText("Training Plan");
+                    tvPlanPhase.setText("Plan goal unavailable");
                     Toast.makeText(Elite_plan.this, "Could not load plan goal", Toast.LENGTH_SHORT).show();
                 });
             }
@@ -90,11 +92,17 @@ public class Elite_plan extends AppCompatActivity {
                     JsonObject data = result != null && result.has("data") && result.get("data").isJsonObject()
                             ? result.getAsJsonObject("data")
                             : null;
-                    int weeklyMinutes = data != null && data.has("weeklyWorkoutMinutes") ? data.get("weeklyWorkoutMinutes").getAsInt() : 45;
-                    int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 1;
+                    int weeklyMinutes = data != null && data.has("weeklyWorkoutMinutes") ? data.get("weeklyWorkoutMinutes").getAsInt() : 0;
+                    int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 0;
 
-                    tvDayFocusTitle.setText("Next Session - Progressive Focus");
-                    tvDayFocusDuration.setText("Estimated Duration: " + Math.max(20, weeklyMinutes / Math.max(1, weeklyWorkouts)) + " mins");
+                    if (weeklyWorkouts > 0) {
+                        int estimatedMinutes = Math.max(1, weeklyMinutes / weeklyWorkouts);
+                        tvDayFocusTitle.setText("Next Session - Progressive Focus");
+                        tvDayFocusDuration.setText("Estimated Duration: " + estimatedMinutes + " mins");
+                    } else {
+                        tvDayFocusTitle.setText("Start your first workout to build a plan");
+                        tvDayFocusDuration.setText("Estimated Duration: --");
+                    }
 
                     JsonArray recentWorkouts = data != null && data.has("recentWorkouts") && data.get("recentWorkouts").isJsonArray()
                             ? data.getAsJsonArray("recentWorkouts")
@@ -110,6 +118,9 @@ public class Elite_plan extends AppCompatActivity {
 
                         tvPlanExercise.setText(name);
                         tvPlanSets.setText("Duration: " + duration + " mins");
+                    } else {
+                        tvPlanExercise.setText("No recent workout");
+                        tvPlanSets.setText("Log a workout to see details");
                     }
                 });
             }
@@ -120,6 +131,10 @@ public class Elite_plan extends AppCompatActivity {
                     if (AuthSessionHelper.handleIfAuthExpired(Elite_plan.this, errorMessage)) {
                         return;
                     }
+                    tvDayFocusTitle.setText("Plan metrics unavailable");
+                    tvDayFocusDuration.setText("Estimated Duration: --");
+                    tvPlanExercise.setText("No recent workout");
+                    tvPlanSets.setText("Log a workout to see details");
                     Toast.makeText(Elite_plan.this, "Could not load plan metrics", Toast.LENGTH_SHORT).show();
                 });
             }
