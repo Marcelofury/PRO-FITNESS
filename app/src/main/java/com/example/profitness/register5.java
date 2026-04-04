@@ -64,8 +64,10 @@ public class register5 extends AppCompatActivity {
                         runOnUiThread(() -> {
                             store.clear();
                             Toast.makeText(register5.this, "Profile setup complete", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(register5.this, Home_dashboard.class));
-                            finishAffinity();
+                            Intent homeIntent = new Intent(register5.this, Home_dashboard.class);
+                            homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(homeIntent);
+                            finish();
                         });
                     }
 
