@@ -22,10 +22,10 @@ import java.util.Locale;
 
 public class Home_dashboard extends AppCompatActivity {
 
-    private static final int DAILY_CALORIES_GOAL = 2450;
-    private static final int DAILY_PROTEIN_GOAL = 150;
-    private static final int DAILY_CARBS_GOAL = 250;
-    private static final int DAILY_FAT_GOAL = 60;
+    private static final int DEFAULT_DAILY_CALORIES_GOAL = 2450;
+    private static final int DEFAULT_DAILY_PROTEIN_GOAL = 150;
+    private static final int DEFAULT_DAILY_CARBS_GOAL = 250;
+    private static final int DEFAULT_DAILY_FAT_GOAL = 60;
     private static final int DAILY_WATER_GOAL_ML = 2500;
 
     private ProFitnessApi api;
@@ -40,9 +40,14 @@ public class Home_dashboard extends AppCompatActivity {
     private TextView tvHomeWater;
     private TextView tvFocusSubtitle;
     private TextView tvHomeWeeklyWorkouts;
+    private TextView tvHomeWeeklyMinutes;
     private TextView tvHomeMonthlyWorkouts;
     private TextView tvHomeRecentTitle;
     private TextView tvHomeRecentSubtitle;
+    private int dailyCaloriesGoal = DEFAULT_DAILY_CALORIES_GOAL;
+    private int dailyProteinGoal = DEFAULT_DAILY_PROTEIN_GOAL;
+    private int dailyCarbsGoal = DEFAULT_DAILY_CARBS_GOAL;
+    private int dailyFatGoal = DEFAULT_DAILY_FAT_GOAL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +66,7 @@ public class Home_dashboard extends AppCompatActivity {
         tvHomeWater = findViewById(R.id.tv_home_water);
         tvFocusSubtitle = findViewById(R.id.tv_focus_subtitle);
         tvHomeWeeklyWorkouts = findViewById(R.id.tv_home_weekly_workouts);
+        tvHomeWeeklyMinutes = findViewById(R.id.tv_home_weekly_minutes);
         tvHomeMonthlyWorkouts = findViewById(R.id.tv_home_monthly_workouts);
         tvHomeRecentTitle = findViewById(R.id.tv_home_recent_title);
         tvHomeRecentSubtitle = findViewById(R.id.tv_home_recent_subtitle);
@@ -91,6 +97,9 @@ public class Home_dashboard extends AppCompatActivity {
                     if (data != null && data.has("name")) {
                         tvWelcomeName.setText(data.get("name").getAsString() + "!");
                     }
+
+                    applyProfileBasedGoals(data);
+                    loadNutritionSummary();
                 });
             }
 
@@ -118,12 +127,12 @@ public class Home_dashboard extends AppCompatActivity {
                     int carbs = data != null && data.has("carbsGrams") ? data.get("carbsGrams").getAsInt() : 0;
                     int fat = data != null && data.has("fatGrams") ? data.get("fatGrams").getAsInt() : 0;
 
-                    int remaining = Math.max(0, DAILY_CALORIES_GOAL - calories);
+                    int remaining = Math.max(0, dailyCaloriesGoal - calories);
                     tvKcalRemaining.setText(String.format(Locale.US, "%,d", remaining));
-                    tvKcalGoal.setText("/ " + DAILY_CALORIES_GOAL + " KCAL");
-                    tvMacroProtein.setText("PROTEIN   " + protein + "G / " + DAILY_PROTEIN_GOAL + "G");
-                    tvMacroCarbs.setText("CARBS   " + carbs + "G / " + DAILY_CARBS_GOAL + "G");
-                    tvMacroFat.setText("FAT   " + fat + "G / " + DAILY_FAT_GOAL + "G");
+                    tvKcalGoal.setText("/ " + dailyCaloriesGoal + " KCAL");
+                    tvMacroProtein.setText("PROTEIN   " + protein + "G / " + dailyProteinGoal + "G");
+                    tvMacroCarbs.setText("CARBS   " + carbs + "G / " + dailyCarbsGoal + "G");
+                    tvMacroFat.setText("FAT   " + fat + "G / " + dailyFatGoal + "G");
                 });
             }
 
@@ -173,12 +182,14 @@ public class Home_dashboard extends AppCompatActivity {
                     JsonObject data = result.getAsJsonObject("data");
                     int workoutsCount = data != null && data.has("workoutsCount") ? data.get("workoutsCount").getAsInt() : 0;
                     int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 0;
+                    int weeklyMinutes = data != null && data.has("weeklyWorkoutMinutes") ? data.get("weeklyWorkoutMinutes").getAsInt() : 0;
                     int monthlyWorkouts = data != null && data.has("monthlyWorkoutsCount") ? data.get("monthlyWorkoutsCount").getAsInt() : 0;
                     int streakDays = data != null && data.has("streakDays") ? data.get("streakDays").getAsInt() : 0;
 
                     lblFocus.setText("Today's Focus (" + workoutsCount + " workouts)");
                     tvFocusSubtitle.setText(streakDays > 0 ? streakDays + " day streak active" : "Start your first workout today");
                     tvHomeWeeklyWorkouts.setText(weeklyWorkouts + " workouts this week");
+                    tvHomeWeeklyMinutes.setText(weeklyMinutes + " min this week");
                     tvHomeMonthlyWorkouts.setText(monthlyWorkouts + " workouts this month");
 
                     JsonArray recentWorkouts = data != null ? data.getAsJsonArray("recentWorkouts") : null;
@@ -205,5 +216,38 @@ public class Home_dashboard extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void applyProfileBasedGoals(JsonObject profileData) {
+        if (profileData == null) {
+            return;
+        }
+
+        double weightKg = profileData.has("weightKg") && !profileData.get("weightKg").isJsonNull()
+                ? profileData.get("weightKg").getAsDouble()
+                : 0;
+        String goalText = profileData.has("goal") && !profileData.get("goal").isJsonNull()
+                ? profileData.get("goal").getAsString().toLowerCase(Locale.US)
+                : "";
+
+        if (weightKg <= 0) {
+            return;
+        }
+
+        int calories = (int) Math.round(weightKg * 33);
+        if (goalText.contains("lose") || goalText.contains("fat loss") || goalText.contains("cut")) {
+            calories -= 300;
+        } else if (goalText.contains("gain") || goalText.contains("bulk")) {
+            calories += 250;
+        }
+
+        int protein = (int) Math.max(110, Math.round(weightKg * 2.0));
+        int fat = (int) Math.max(45, Math.round(weightKg * 0.8));
+        int carbs = Math.max(100, (calories - (protein * 4) - (fat * 9)) / 4);
+
+        dailyCaloriesGoal = Math.max(1600, calories);
+        dailyProteinGoal = protein;
+        dailyFatGoal = fat;
+        dailyCarbsGoal = carbs;
     }
 }
