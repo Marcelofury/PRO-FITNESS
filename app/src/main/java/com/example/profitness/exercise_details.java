@@ -22,6 +22,11 @@ public class exercise_details extends AppCompatActivity {
         BottomNavHelper.setup(this, nav, R.id.nav_workout);
 
         TextView tvTitle = findViewById(R.id.exercise_title);
+        TextView tvTagMuscle = findViewById(R.id.tv_tag_muscle);
+        TextView tvTagDifficulty = findViewById(R.id.tv_tag_difficulty);
+        TextView tvTagDuration = findViewById(R.id.tv_tag_duration);
+        TextView tvInstructions = findViewById(R.id.tv_instructions_body);
+        TextView tvMistakes = findViewById(R.id.tv_common_mistakes);
 
         String exerciseName = getIntent().getStringExtra("exercise_name");
         String muscle = getIntent().getStringExtra("exercise_muscle");
@@ -32,6 +37,13 @@ public class exercise_details extends AppCompatActivity {
             tvTitle.setText(exerciseName);
         }
 
+        tvTagMuscle.setText(muscle != null && !muscle.trim().isEmpty() ? muscle : "General");
+        tvTagDifficulty.setText(difficulty != null && !difficulty.trim().isEmpty() ? difficulty : "Beginner");
+        tvTagDuration.setText(duration + " min");
+
+        tvInstructions.setText(buildInstructions(exerciseName, muscle));
+        tvMistakes.setText(buildCommonMistakes(muscle));
+
         findViewById(R.id.fab_add_to_workout).setOnClickListener(v -> {
             Intent intent = new Intent(exercise_details.this, active_workout.class);
             intent.putExtra("prefill_workout_name", tvTitle.getText().toString());
@@ -41,5 +53,21 @@ public class exercise_details extends AppCompatActivity {
         TextView tagsText = findViewById(R.id.exercise_title);
         tagsText.setContentDescription((muscle != null ? muscle : "General") + " • "
                 + (difficulty != null ? difficulty : "Beginner") + " • " + duration + " min");
+    }
+
+    private String buildInstructions(String exerciseName, String muscle) {
+        String displayName = exerciseName != null && !exerciseName.trim().isEmpty() ? exerciseName : "this exercise";
+        String primary = muscle != null && !muscle.trim().isEmpty() ? muscle.toLowerCase() : "target";
+
+        return "1. Set up with stable posture before starting " + displayName + ".\n\n"
+                + "2. Control the lowering phase and keep tension on your " + primary + " muscles.\n\n"
+                + "3. Exhale during the effort phase and maintain smooth reps.\n\n"
+                + "4. Stop the set if form breaks and reset before continuing.";
+    }
+
+    private String buildCommonMistakes(String muscle) {
+        String primary = muscle != null && !muscle.trim().isEmpty() ? muscle.toLowerCase() : "target";
+        return "Using momentum instead of controlled movement, shortening range of motion, and shifting load away from "
+                + primary + " by poor posture.";
     }
 }
