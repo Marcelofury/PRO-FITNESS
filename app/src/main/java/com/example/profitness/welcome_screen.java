@@ -16,7 +16,7 @@ public class welcome_screen extends AppCompatActivity {
         Button btnGetStarted = findViewById(R.id.btnGetStarted);
         Button btnLogin = findViewById(R.id.btnLogin);
 
-        btnGetStarted.setOnClickListener(v -> startActivity(new Intent(this, register2.class)));
+        btnGetStarted.setOnClickListener(v -> startActivity(new Intent(this, login.class)));
         btnLogin.setOnClickListener(v -> startActivity(new Intent(this, login.class)));
     }
 }
