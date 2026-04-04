@@ -14,6 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
+            android:id="@+id/btn_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_centerVertical="true"
@@ -74,8 +75,8 @@
                 <LinearLayout android:padding="20dp" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                         <TextView android:id="@+id/t1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CURRENT WEIGHT" android:textColor="@color/text_gray" android:textSize="10sp"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/t1" android:text="78.5 kg" android:textColor="@color/white" android:textSize="26sp" android:textStyle="bold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="START WEIGHT\n82.0 kg" android:gravity="end" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                        <TextView android:id="@+id/tv_current_weight" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/t1" android:text="78.5 kg" android:textColor="@color/white" android:textSize="26sp" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tv_start_weight" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="START WEIGHT\n82.0 kg" android:gravity="end" android:textColor="@color/text_gray" android:textSize="10sp"/>
                     </RelativeLayout>
                     <View android:layout_width="match_parent" android:layout_height="120dp" android:layout_marginTop="16dp" android:background="@drawable/dummy_graph_gradient"/>
                 </LinearLayout>
@@ -97,7 +98,7 @@
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Strength 1RM" android:textColor="@color/white" android:textStyle="bold" android:layout_marginBottom="12dp"/>
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bench Press" android:textColor="@color/text_gray"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="95kg ↗" android:textColor="@color/white" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tv_strength_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="95kg ↗" android:textColor="@color/white" android:textStyle="bold"/>
                     </RelativeLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -116,7 +117,7 @@
                     <com.google.android.material.card.MaterialCardView android:layout_width="140dp" android:layout_height="wrap_content" android:layout_marginEnd="12dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp">
                         <LinearLayout android:padding="16dp" android:gravity="center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
                             <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ic_medal" app:tint="@color/neon_cyan" android:background="@drawable/circle_bg_teal" android:padding="8dp"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10 Workouts" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
+                            <TextView android:id="@+id/tv_recent_achievement" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10 Workouts" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
                         </LinearLayout>
                     </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
