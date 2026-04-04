@@ -6,7 +6,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
@@ -37,7 +39,11 @@ public class settings extends AppCompatActivity {
 
         SwitchCompat switchWorkoutReminder = findViewById(R.id.switch_settings_workout_reminder);
         SwitchCompat switchHydrationReminder = findViewById(R.id.switch_settings_hydration_reminder);
+        EditText etBackendUrl = findViewById(R.id.et_settings_backend_url);
         TextView tvAppVersion = findViewById(R.id.tv_settings_version);
+
+        String savedBaseUrl = prefs.getString(ApiConfig.KEY_BASE_URL, ApiConfig.DEFAULT_BASE_URL);
+        etBackendUrl.setText(savedBaseUrl);
 
         switchWorkoutReminder.setChecked(prefs.getBoolean(KEY_REMINDER_WORKOUT, true));
         switchHydrationReminder.setChecked(prefs.getBoolean(KEY_REMINDER_HYDRATION, true));
@@ -78,6 +84,12 @@ public class settings extends AppCompatActivity {
         findViewById(R.id.btn_settings_dashboard).setOnClickListener(v ->
                 startActivity(new Intent(settings.this, Home_dashboard.class))
         );
+        findViewById(R.id.btn_settings_save_backend).setOnClickListener(v -> {
+            String normalized = ApiConfig.normalizeBaseUrl(etBackendUrl.getText().toString());
+            prefs.edit().putString(ApiConfig.KEY_BASE_URL, normalized).apply();
+            etBackendUrl.setText(normalized);
+            Toast.makeText(settings.this, "Backend URL saved", Toast.LENGTH_SHORT).show();
+        });
         findViewById(R.id.btn_settings_logout).setOnClickListener(v -> confirmLogout());
     }
 
