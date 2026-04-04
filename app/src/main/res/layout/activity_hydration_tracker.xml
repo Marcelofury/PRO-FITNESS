@@ -97,7 +97,7 @@
 
             <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="32dp">
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TODAY'S LOGS" android:textColor="@color/neon_cyan" android:textSize="12sp" android:textStyle="bold"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="View History" android:textColor="@color/neon_cyan" android:textSize="12sp"/>
+                <TextView android:id="@+id/tv_view_history" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="View History" android:textColor="@color/neon_cyan" android:textSize="12sp"/>
             </RelativeLayout>
 
             <include layout="@layout/item_water_log" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp"/>
