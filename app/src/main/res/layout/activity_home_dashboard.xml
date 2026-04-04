@@ -1,0 +1,209 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp">
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/avatar_sample"
+                    app:shapeAppearanceOverlay="@style/CircleImage"
+                    android:scaleType="centerCrop"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/profile_image"
+                    android:layout_marginStart="12dp"
+                    android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="WELCOME BACK," android:textColor="@color/text_gray" android:textSize="10sp" android:letterSpacing="0.1"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Marcel!" android:textColor="@color/white" android:textSize="24sp" android:textStyle="bold"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                        android:text="Monday, June 12" android:textColor="@color/neon_cyan" android:textSize="12sp"/>
+                </LinearLayout>
+                <ImageView android:layout_width="28dp" android:layout_height="28dp"
+                    android:layout_alignParentEnd="true" android:layout_centerVertical="true"
+                    android:src="@drawable/ic_setting" app:tint="@color/white"/>
+            </RelativeLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/card_bg"
+                app:cardCornerRadius="24dp"
+                app:strokeWidth="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp">
+
+                    <FrameLayout
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_gravity="center">
+                        <ProgressBar
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:indeterminate="false"
+                            android:progress="75"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:progressDrawable="@drawable/circular_progress"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content" android:layout_height="wrap_content"
+                            android:layout_gravity="center" android:gravity="center" android:orientation="vertical">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="1,850" android:textColor="@color/white" android:textSize="36sp" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:text="/ 2,450 KCAL" android:textColor="@color/text_gray" android:textSize="12sp"/>
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="20dp">
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="PROTEIN   120G / 150G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
+                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="80" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="CARBS   180G / 250G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
+                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="72" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
+                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="FAT   40G / 60G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
+                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="65" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:useDefaultMargins="true"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_margin="4dp"
+                    app:cardBackgroundColor="@color/card_bg"
+                    app:cardCornerRadius="16dp"
+                    app:strokeWidth="0dp">
+                    <LinearLayout android:padding="16dp" android:orientation="vertical">
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_weight" app:tint="@color/neon_cyan"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Log Workout" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Record exercises" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_margin="4dp"
+                    app:cardBackgroundColor="@color/card_bg"
+                    app:cardCornerRadius="16dp"
+                    app:strokeWidth="0dp">
+                    <LinearLayout android:padding="16dp" android:orientation="vertical">
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_chart" app:tint="@color/neon_cyan"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Track Progress" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="View charts &amp; stats" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_margin="4dp"
+                    app:cardBackgroundColor="@color/card_bg"
+                    app:cardCornerRadius="16dp"
+                    app:strokeWidth="0dp">
+                    <LinearLayout android:padding="16dp" android:orientation="vertical">
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_nutrition" app:tint="@color/neon_cyan"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Log Meal" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Track nutrition" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:layout_margin="4dp"
+                    app:cardBackgroundColor="@color/card_bg"
+                    app:cardCornerRadius="16dp"
+                    app:strokeWidth="0dp">
+                    <LinearLayout android:padding="16dp" android:orientation="vertical">
+                        <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_water" app:tint="@color/neon_cyan"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Water Intake" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4/8 glasses today" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </GridLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <TextView android:id="@+id/lbl_focus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today's Focus" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:background="@drawable/badge_bg_cyan" android:paddingHorizontal="10dp" android:paddingVertical="4dp" android:text="STRENGTH" android:textColor="@color/neon_cyan" android:textSize="10sp" android:textStyle="bold"/>
+                    </RelativeLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chest &amp; Triceps" android:textColor="@color/neon_cyan" android:textSize="18sp" android:layout_marginTop="4dp"/>
+                    <Button android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="20dp" android:text="START WORKOUT" android:backgroundTint="@color/neon_cyan" android:textColor="@android:color/black" android:textStyle="bold" app:cornerRadius="12dp"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="RECENT ACTIVITY" android:textColor="@color/text_gray" android:textSize="12sp" android:textStyle="bold" android:letterSpacing="0.1" android:layout_marginTop="24dp" android:layout_marginBottom="12dp"/>
+            <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="16dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp">
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp">
+                        <com.google.android.material.imageview.ShapeableImageView android:id="@+id/icon1" android:layout_width="40dp" android:layout_height="40dp" android:padding="8dp" android:background="#1A3A3A" android:src="@drawable/ic_medal" app:tint="@color/neon_cyan" app:shapeAppearanceOverlay="@style/CircleImage"/>
+                        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/icon1" android:layout_marginStart="12dp" android:orientation="vertical">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Goal Smashed!" android:textColor="@color/white" android:textStyle="bold"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="7-day workout streak achieved" android:textColor="@color/text_gray" android:textSize="12sp"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="“The only bad workout is the one that didn't\nhappen.”" android:textColor="@color/white" android:gravity="center" android:textSize="16sp" android:textStyle="italic" android:layout_marginTop="40dp"/>
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="STAY CONSISTENT" android:textColor="@color/neon_cyan" android:gravity="center" android:textStyle="bold" android:layout_marginTop="16dp" android:layout_marginBottom="40dp" android:textSize="12sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/bg_dark"
+        app:itemIconTint="@color/neon_cyan"
+        app:itemTextColor="@color/text_gray"
+        app:labelVisibilityMode="labeled"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
