@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.profitness.navigation.BottomNavHelper;
 import com.example.profitness.network.ApiCallback;
+import com.example.profitness.network.AuthSessionHelper;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,7 +52,12 @@ public class active_workout extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(active_workout.this, errorMessage, Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(active_workout.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(active_workout.this, errorMessage, Toast.LENGTH_LONG).show();
+                });
             }
         });
     }
