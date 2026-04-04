@@ -2,12 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const WorkoutLog = require('../models/WorkoutLog');
 const validateWorkoutPayload = require('../middleware/validateWorkout');
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
+router.use(auth);
+
 router.get('/', async (req, res) => {
   try {
-    const workouts = await WorkoutLog.find().sort({ createdAt: -1 }).limit(50);
+    const workouts = await WorkoutLog.find({ userId: req.user._id }).sort({ createdAt: -1 }).limit(50);
     res.json({ success: true, data: workouts });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to fetch workouts' });
@@ -22,7 +25,7 @@ router.get('/:id', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid workout id' });
     }
 
-    const workout = await WorkoutLog.findById(id);
+    const workout = await WorkoutLog.findOne({ _id: id, userId: req.user._id });
 
     if (!workout) {
       return res.status(404).json({ success: false, message: 'Workout not found' });
@@ -36,7 +39,12 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', validateWorkoutPayload, async (req, res) => {
   try {
-    const workout = await WorkoutLog.create(req.body);
+    const workout = await WorkoutLog.create({
+      userId: req.user._id,
+      workoutName: req.body.workoutName,
+      durationMinutes: req.body.durationMinutes,
+      caloriesBurned: req.body.caloriesBurned,
+    });
     res.status(201).json({ success: true, data: workout });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Failed to create workout' });
@@ -51,7 +59,7 @@ router.put('/:id', validateWorkoutPayload, async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid workout id' });
     }
 
-    const updatedWorkout = await WorkoutLog.findByIdAndUpdate(id, req.body, {
+    const updatedWorkout = await WorkoutLog.findOneAndUpdate({ _id: id, userId: req.user._id }, req.body, {
       new: true,
       runValidators: true,
     });
@@ -74,7 +82,7 @@ router.delete('/:id', async (req, res) => {
       return res.status(400).json({ success: false, message: 'Invalid workout id' });
     }
 
-    const deletedWorkout = await WorkoutLog.findByIdAndDelete(id);
+    const deletedWorkout = await WorkoutLog.findOneAndDelete({ _id: id, userId: req.user._id });
 
     if (!deletedWorkout) {
       return res.status(404).json({ success: false, message: 'Workout not found' });
