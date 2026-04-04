@@ -126,6 +126,7 @@
                             android:textColor="#9DA8A8"
                             android:textSize="10sp" />
                         <TextView
+                            android:id="@+id/tvSummaryGoal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Build Muscle &amp; Strength"
@@ -174,6 +175,7 @@
                                 android:textColor="#9DA8A8"
                                 android:textSize="10sp" />
                             <TextView
+                                android:id="@+id/tvSummaryHeight"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="184 cm"
@@ -216,6 +218,7 @@
                                 android:textColor="#9DA8A8"
                                 android:textSize="10sp" />
                             <TextView
+                                android:id="@+id/tvSummaryWeight"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="82 kg"
@@ -261,6 +264,7 @@
                             android:textColor="#9DA8A8"
                             android:textSize="10sp" />
                         <TextView
+                            android:id="@+id/tvSummaryActivity"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Highly Active (5+ days/week)"
