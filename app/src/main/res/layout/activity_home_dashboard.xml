@@ -75,7 +75,7 @@
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_gravity="center" android:gravity="center" android:orientation="vertical">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:id="@+id/tv_kcal_remaining" android:text="1,850" android:textColor="@color/white" android:textSize="36sp" android:textStyle="bold"/>
+                                android:id="@+id/tv_kcal_remaining" android:text="0" android:textColor="@color/white" android:textSize="36sp" android:textStyle="bold"/>
                             <TextView android:id="@+id/tv_kcal_goal" android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:text="/ 2,450 KCAL" android:textColor="@color/text_gray" android:textSize="12sp"/>
                         </LinearLayout>
@@ -164,7 +164,7 @@
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp" android:orientation="vertical">
                         <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_water" app:tint="@color/neon_cyan"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Water Intake" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
-                        <TextView android:id="@+id/tv_home_water" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4/8 glasses today" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                        <TextView android:id="@+id/tv_home_water" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0/10 glasses today" android:textColor="@color/text_gray" android:textSize="10sp"/>
                         <ProgressBar android:id="@+id/progress_home_water" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:layout_marginTop="6dp" android:progress="50" android:progressTint="@color/neon_cyan"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
@@ -178,7 +178,7 @@
                         <TextView android:id="@+id/lbl_focus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today's Focus" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold"/>
                         <TextView android:id="@+id/tv_focus_badge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:background="@drawable/badge_bg_cyan" android:paddingHorizontal="10dp" android:paddingVertical="4dp" android:text="FOCUS" android:textColor="@color/neon_cyan" android:textSize="10sp" android:textStyle="bold"/>
                     </RelativeLayout>
-                    <TextView android:id="@+id/tv_focus_subtitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chest &amp; Triceps" android:textColor="@color/neon_cyan" android:textSize="18sp" android:layout_marginTop="4dp"/>
+                    <TextView android:id="@+id/tv_focus_subtitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Progress updates will appear here" android:textColor="@color/neon_cyan" android:textSize="18sp" android:layout_marginTop="4dp"/>
                     <Button android:id="@+id/btn_start_workout" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="20dp" android:text="START WORKOUT" android:backgroundTint="@color/neon_cyan" android:textColor="@android:color/black" android:textStyle="bold" app:cornerRadius="12dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -189,8 +189,8 @@
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp">
                         <com.google.android.material.imageview.ShapeableImageView android:id="@+id/icon1" android:layout_width="40dp" android:layout_height="40dp" android:padding="8dp" android:background="#1A3A3A" android:src="@drawable/ic_medal" app:tint="@color/neon_cyan" app:shapeAppearanceOverlay="@style/CircleImage"/>
                         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/icon1" android:layout_marginStart="12dp" android:orientation="vertical">
-                            <TextView android:id="@+id/tv_home_recent_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Goal Smashed!" android:textColor="@color/white" android:textStyle="bold"/>
-                            <TextView android:id="@+id/tv_home_recent_subtitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="7-day workout streak achieved" android:textColor="@color/text_gray" android:textSize="12sp"/>
+                            <TextView android:id="@+id/tv_home_recent_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recent activity" android:textColor="@color/white" android:textStyle="bold"/>
+                            <TextView android:id="@+id/tv_home_recent_subtitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Complete your first workout" android:textColor="@color/text_gray" android:textSize="12sp"/>
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
