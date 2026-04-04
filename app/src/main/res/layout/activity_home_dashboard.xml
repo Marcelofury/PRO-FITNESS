@@ -42,7 +42,7 @@
                     <TextView android:id="@+id/tv_today_date" android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Monday, June 12" android:textColor="@color/neon_cyan" android:textSize="12sp"/>
                 </LinearLayout>
-                <ImageView android:layout_width="28dp" android:layout_height="28dp"
+                <ImageView android:id="@+id/iv_home_settings" android:layout_width="28dp" android:layout_height="28dp"
                     android:layout_alignParentEnd="true" android:layout_centerVertical="true"
                     android:src="@drawable/ic_setting" app:tint="@color/white"/>
             </RelativeLayout>
