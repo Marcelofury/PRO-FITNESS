@@ -134,46 +134,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword" />
 
     <TextView
-        android:id="@+id/tvOr"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        android:text="— OR CONTINUE WITH —"
-        android:textColor="#4DFFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin" />
-
-    <LinearLayout
-        android:id="@+id/socialLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvOr">
-
-        <ImageButton
-            android:id="@+id/btnGoogleSignIn"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/circle_social_bg"
-            android:contentDescription="Google sign in"
-            android:src="@drawable/ic_google" />
-
-        <ImageButton
-            android:id="@+id/btnAppleSignIn"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:background="@drawable/circle_social_bg"
-            android:contentDescription="Apple sign in"
-            android:src="@drawable/ic_apple" />
-    </LinearLayout>
-
-    <TextView
         android:id="@+id/tvRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
