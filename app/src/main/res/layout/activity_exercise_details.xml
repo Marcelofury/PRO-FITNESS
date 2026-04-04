@@ -105,7 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:lineSpacingExtra="6dp"
-                android:text="1. Lie flat on a bench and grip the barbell with hands slightly wider than shoulder-width.\n\n2. Plant your feet firmly on the floor and maintain a slight arch in your lower back.\n\n3. Lower the bar slowly to your mid-chest while keeping your elbows at a 45-degree angle.\n\n4. Push the bar back up forcefully to the starting position by extending your arms fully."
+                android:text="Instructions will appear here"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
