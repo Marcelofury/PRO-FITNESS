@@ -1,5 +1,6 @@
 package com.example.profitness;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,6 +41,13 @@ public class Your_progress extends AppCompatActivity {
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         BottomNavHelper.setup(this, nav, R.id.nav_progress);
+
+        findViewById(R.id.card_strength_focus).setOnClickListener(v ->
+            startActivity(new Intent(Your_progress.this, intensity_focus.class))
+        );
+        findViewById(R.id.card_elite_plan).setOnClickListener(v ->
+            startActivity(new Intent(Your_progress.this, Elite_plan.class))
+        );
 
         loadProfileMetrics();
         loadProgressSummary();
