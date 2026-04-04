@@ -29,7 +29,7 @@ public class login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.content_login);
 
         api = new ProFitnessApi(new TokenStore(this));
 
@@ -37,11 +37,15 @@ public class login extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         TextView tvRegister = findViewById(R.id.tvRegister);
+        TextView tvForgotPassword = findViewById(R.id.tvForgotPassword);
         ImageButton btnBack = findViewById(R.id.btnBack);
 
         btnBack.setOnClickListener(v -> finish());
         btnLogin.setOnClickListener(v -> performLogin());
         tvRegister.setOnClickListener(v -> showRegisterDialog());
+        tvForgotPassword.setOnClickListener(v ->
+            Toast.makeText(this, "Reset password is coming soon", Toast.LENGTH_SHORT).show()
+        );
     }
 
     private void performLogin() {
