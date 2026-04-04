@@ -46,6 +46,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
+        android:text="Backend URL"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_settings_backend_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/input_field_bg"
+        android:hint="https://your-service.onrender.com"
+        android:inputType="textUri"
+        android:padding="12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/text_gray" />
+
+    <Button
+        android:id="@+id/btn_settings_save_backend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Save Backend URL"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/card_bg"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
         android:text="Reminders"
         android:textColor="@color/white"
         android:textStyle="bold"
