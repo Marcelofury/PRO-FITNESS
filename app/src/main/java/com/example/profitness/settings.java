@@ -41,7 +41,7 @@ public class settings extends AppCompatActivity {
             prefs.edit().putBoolean(KEY_REMINDER_HYDRATION, isChecked).apply()
         );
 
-        tvAppVersion.setText("App version " + BuildConfig.VERSION_NAME);
+        tvAppVersion.setText("App version " + getAppVersionName());
 
         findViewById(R.id.btn_settings_back).setOnClickListener(v -> finish());
         findViewById(R.id.btn_settings_profile).setOnClickListener(v ->
@@ -58,5 +58,13 @@ public class settings extends AppCompatActivity {
         Intent intent = new Intent(this, login.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+    }
+
+    private String getAppVersionName() {
+        try {
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (Exception ignored) {
+            return "1.0";
+        }
     }
 }
