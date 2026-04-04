@@ -16,7 +16,7 @@
         android:background="@drawable/circle_social_bg"
         android:src="@drawable/ic_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="#FFFFFF"
         tools:layout_editor_absoluteY="43dp" />
 
@@ -33,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.428"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toTopOf="@+id/btnBack" />
+        app:layout_constraintTop_toTopOf="@+id/btnBack" />
 
     <TextView
         android:id="@+id/tvTitle"
@@ -45,7 +45,7 @@
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/btnBack"
+        app:layout_constraintTop_toBottomOf="@+id/btnBack"
         tools:layout_editor_absoluteY="98dp" />
 
     <TextView
@@ -57,7 +57,7 @@
         android:textColor="#B3FFFFFF"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         tools:layout_editor_absoluteY="152dp" />
 
     <TextView
@@ -68,7 +68,7 @@
         android:text="Email Address"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/tvSubtitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"
         tools:layout_editor_absoluteY="203dp" />
 
     <EditText
@@ -86,7 +86,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/lblEmail"
+        app:layout_constraintTop_toBottomOf="@+id/lblEmail"
         tools:layout_editor_absoluteY="232dp" />
 
     <TextView
@@ -97,7 +97,7 @@
         android:text="Password"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/etEmail"
+        app:layout_constraintTop_toBottomOf="@+id/etEmail"
         tools:layout_editor_absoluteY="303dp" />
 
     <EditText
@@ -117,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/lblPassword"
+        app:layout_constraintTop_toBottomOf="@+id/lblPassword"
         tools:layout_editor_absoluteY="337dp" />
 
     <TextView
@@ -129,7 +129,7 @@
         android:textColor="#00E5FF"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_top_toBottomOf="@+id/etPassword"
+        app:layout_constraintTop_toBottomOf="@+id/etPassword"
         tools:layout_editor_absoluteY="399dp" />
 
     <Button
@@ -144,7 +144,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/tvForgotPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword"
         tools:layout_editor_absoluteY="442dp" />
 
     <TextView
@@ -156,7 +156,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/btnLogin"
+        app:layout_constraintTop_toBottomOf="@+id/btnLogin"
         tools:layout_editor_absoluteY="526dp" />
 
     <LinearLayout
@@ -166,7 +166,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_top_toBottomOf="@+id/tvOr"
+        app:layout_constraintTop_toBottomOf="@+id/tvOr"
         tools:layout_editor_absoluteY="24dp">
 
     </LinearLayout>
