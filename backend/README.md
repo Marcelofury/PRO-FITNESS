@@ -21,7 +21,18 @@ Example:
 ## 3) Test API
 - Health: `GET http://localhost:5000/api/health`
 - List workouts: `GET http://localhost:5000/api/workouts`
+- Get one workout: `GET http://localhost:5000/api/workouts/:id`
 - Create workout: `POST http://localhost:5000/api/workouts`
+- Update workout: `PUT http://localhost:5000/api/workouts/:id`
+- Delete workout: `DELETE http://localhost:5000/api/workouts/:id`
+
+Required payload fields for create/update:
+- `userId` (string)
+- `workoutName` (string)
+- `durationMinutes` (positive number)
+
+Optional:
+- `caloriesBurned` (non-negative number)
 
 ## Troubleshooting
 - If startup fails with `MONGODB_URI still contains placeholders`, open `.env` and replace `<username>`, `<password>`, and `<cluster-name>` with real values from MongoDB Atlas.
