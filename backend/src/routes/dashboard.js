@@ -8,6 +8,29 @@ const router = express.Router();
 
 router.use(auth);
 
+function computeCurrentStreak(workoutDayStrings) {
+  if (!Array.isArray(workoutDayStrings) || workoutDayStrings.length === 0) {
+    return 0;
+  }
+
+  const workoutSet = new Set(workoutDayStrings);
+  const current = new Date();
+  current.setHours(0, 0, 0, 0);
+
+  let streak = 0;
+  while (true) {
+    const key = current.toISOString().slice(0, 10);
+    if (!workoutSet.has(key)) {
+      break;
+    }
+
+    streak += 1;
+    current.setDate(current.getDate() - 1);
+  }
+
+  return streak;
+}
+
 router.get('/summary', async (req, res) => {
   try {
     const dayStart = new Date();
@@ -19,7 +42,7 @@ router.get('/summary', async (req, res) => {
     const monthStart = new Date(dayStart);
     monthStart.setDate(monthStart.getDate() - 29);
 
-    const [dailyWorkoutAgg, weeklyWorkoutAgg, monthlyWorkoutAgg, hydrationAgg, nutritionAgg, recentWorkouts] = await Promise.all([
+    const [dailyWorkoutAgg, weeklyWorkoutAgg, monthlyWorkoutAgg, hydrationAgg, nutritionAgg, recentWorkouts, workoutDays] = await Promise.all([
       WorkoutLog.aggregate([
         { $match: { userId: req.user._id, createdAt: { $gte: dayStart } } },
         {
@@ -60,7 +83,20 @@ router.get('/summary', async (req, res) => {
         { $group: { _id: null, totalNutritionCalories: { $sum: '$calories' } } },
       ]),
       WorkoutLog.find({ userId: req.user._id }).sort({ createdAt: -1 }).limit(5),
+      WorkoutLog.aggregate([
+        { $match: { userId: req.user._id } },
+        {
+          $project: {
+            day: {
+              $dateToString: { format: '%Y-%m-%d', date: '$createdAt' },
+            },
+          },
+        },
+        { $group: { _id: '$day' } },
+      ]),
     ]);
+
+    const streakDays = computeCurrentStreak(workoutDays.map((d) => d._id));
 
     const summary = {
       workoutsCount: dailyWorkoutAgg[0]?.workoutsCount || 0,
@@ -70,6 +106,7 @@ router.get('/summary', async (req, res) => {
       weeklyWorkoutMinutes: weeklyWorkoutAgg[0]?.totalWorkoutMinutes || 0,
       monthlyWorkoutsCount: monthlyWorkoutAgg[0]?.workoutsCount || 0,
       monthlyWorkoutMinutes: monthlyWorkoutAgg[0]?.totalWorkoutMinutes || 0,
+      streakDays,
       totalHydrationMl: hydrationAgg[0]?.totalHydrationMl || 0,
       totalNutritionCalories: nutritionAgg[0]?.totalNutritionCalories || 0,
       recentWorkouts,
