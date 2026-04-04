@@ -127,10 +127,13 @@ public class ProFitnessApi {
             @Override
             public void onSuccess(String result) {
                 JsonObject json = apiClient.getGson().fromJson(result, JsonObject.class);
-                JsonObject data = json.getAsJsonObject("data");
-                if (data != null && data.has("token")) {
-                    tokenStore.saveToken(data.get("token").getAsString());
+                String token = extractToken(json);
+                if (token == null || token.trim().isEmpty()) {
+                    callback.onError("Authentication token missing in server response");
+                    return;
                 }
+
+                tokenStore.saveToken(token);
                 callback.onSuccess(json);
             }
 
@@ -139,5 +142,40 @@ public class ProFitnessApi {
                 callback.onError(errorMessage);
             }
         };
+    }
+
+    private String extractToken(JsonObject json) {
+        if (json == null) {
+            return null;
+        }
+
+        if (json.has("token") && !json.get("token").isJsonNull()) {
+            try {
+                return json.get("token").getAsString();
+            } catch (Exception ignored) {}
+        }
+
+        if (!json.has("data") || json.get("data").isJsonNull() || !json.get("data").isJsonObject()) {
+            return null;
+        }
+
+        JsonObject data = json.getAsJsonObject("data");
+        if (data.has("token") && !data.get("token").isJsonNull()) {
+            try {
+                return data.get("token").getAsString();
+            } catch (Exception ignored) {
+                return null;
+            }
+        }
+
+        if (data.has("accessToken") && !data.get("accessToken").isJsonNull()) {
+            try {
+                return data.get("accessToken").getAsString();
+            } catch (Exception ignored) {
+                return null;
+            }
+        }
+
+        return null;
     }
 }
