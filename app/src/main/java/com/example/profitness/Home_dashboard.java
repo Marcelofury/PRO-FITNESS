@@ -90,7 +90,7 @@ public class Home_dashboard extends AppCompatActivity {
         findViewById(R.id.card_home_progress).setOnClickListener(v -> startActivity(new Intent(this, Your_progress.class)));
         findViewById(R.id.card_home_nutrition).setOnClickListener(v -> startActivity(new Intent(this, nutrition_log.class)));
         findViewById(R.id.card_home_hydration).setOnClickListener(v -> startActivity(new Intent(this, hydration_tracker.class)));
-        findViewById(R.id.iv_home_settings).setOnClickListener(v -> startActivity(new Intent(this, profile.class)));
+        findViewById(R.id.iv_home_settings).setOnClickListener(v -> startActivity(new Intent(this, settings.class)));
 
         tvTodayDate.setText(new SimpleDateFormat("EEEE, MMM d", Locale.US).format(new Date()));
 
