@@ -15,7 +15,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import com.example.profitness.navigation.BottomNavHelper;
 import com.example.profitness.network.ApiConfig;
 import com.example.profitness.network.TokenStore;
 import com.example.profitness.notifications.ReminderScheduler;
@@ -41,6 +43,8 @@ public class settings extends AppCompatActivity {
         SwitchCompat switchHydrationReminder = findViewById(R.id.switch_settings_hydration_reminder);
         EditText etBackendUrl = findViewById(R.id.et_settings_backend_url);
         TextView tvAppVersion = findViewById(R.id.tv_settings_version);
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        BottomNavHelper.setup(this, nav, R.id.nav_profile);
 
         String savedBaseUrl = prefs.getString(ApiConfig.KEY_BASE_URL, ApiConfig.DEFAULT_BASE_URL);
         etBackendUrl.setText(savedBaseUrl);
