@@ -1,6 +1,8 @@
 package com.example.profitness;
 
 import android.os.Bundle;
+import android.text.InputType;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonObject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 
 public class hydration_tracker extends AppCompatActivity {
 
@@ -45,7 +48,7 @@ public class hydration_tracker extends AppCompatActivity {
         findViewById(R.id.quick_add_250).setOnClickListener(v -> addWater(250));
         findViewById(R.id.quick_add_500).setOnClickListener(v -> addWater(500));
         findViewById(R.id.quick_add_750).setOnClickListener(v -> addWater(750));
-        findViewById(R.id.quick_add_custom).setOnClickListener(v -> addWater(300));
+        findViewById(R.id.quick_add_custom).setOnClickListener(v -> showCustomWaterInputDialog());
 
         loadTodayTotal();
     }
@@ -100,5 +103,41 @@ public class hydration_tracker extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void showCustomWaterInputDialog() {
+        EditText input = new EditText(this);
+        input.setHint("Enter ml (e.g. 350)");
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+        input.setTextColor(getColor(R.color.white));
+        input.setHintTextColor(getColor(R.color.text_gray));
+
+        new AlertDialog.Builder(this)
+                .setTitle("Custom Water Amount")
+                .setView(input)
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Add", (dialog, which) -> {
+                    String raw = input.getText().toString().trim();
+                    if (raw.isEmpty()) {
+                        Toast.makeText(this, "Enter an amount in ml", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    int amount;
+                    try {
+                        amount = Integer.parseInt(raw);
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(this, "Enter a valid number", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    if (amount <= 0 || amount > 5000) {
+                        Toast.makeText(this, "Enter between 1 and 5000 ml", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    addWater(amount);
+                })
+                .show();
     }
 }
