@@ -6,6 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.profitness.network.ApiCallback;
+import com.example.profitness.network.AuthSessionHelper;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.example.profitness.navigation.BottomNavHelper;
@@ -62,7 +63,12 @@ public class hydration_tracker extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(hydration_tracker.this, errorMessage, Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(hydration_tracker.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(hydration_tracker.this, errorMessage, Toast.LENGTH_LONG).show();
+                });
             }
         });
     }
@@ -86,7 +92,12 @@ public class hydration_tracker extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(hydration_tracker.this, "Failed to load hydration data", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(hydration_tracker.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(hydration_tracker.this, "Failed to load hydration data", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
