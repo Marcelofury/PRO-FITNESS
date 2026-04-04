@@ -64,6 +64,7 @@
                         android:layout_height="180dp"
                         android:layout_gravity="center">
                         <ProgressBar
+                            android:id="@+id/progress_kcal_ring"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:indeterminate="false"
@@ -82,11 +83,11 @@
 
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="20dp">
                         <TextView android:id="@+id/tv_macro_protein" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="PROTEIN   120G / 150G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
-                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="80" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
+                        <ProgressBar android:id="@+id/progress_macro_protein" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="80" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
                         <TextView android:id="@+id/tv_macro_carbs" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="CARBS   180G / 250G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
-                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="72" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
+                        <ProgressBar android:id="@+id/progress_macro_carbs" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="72" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
                         <TextView android:id="@+id/tv_macro_fat" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="FAT   40G / 60G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
-                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="65" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp"/>
+                        <ProgressBar android:id="@+id/progress_macro_fat" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="65" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
