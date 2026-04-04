@@ -78,7 +78,10 @@
                         <TextView android:id="@+id/tv_current_weight" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/t1" android:text="78.5 kg" android:textColor="@color/white" android:textSize="26sp" android:textStyle="bold"/>
                         <TextView android:id="@+id/tv_start_weight" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="BASELINE\n82.0 kg" android:gravity="end" android:textColor="@color/text_gray" android:textSize="10sp"/>
                     </RelativeLayout>
-                    <View android:layout_width="match_parent" android:layout_height="120dp" android:layout_marginTop="16dp" android:background="@drawable/dummy_graph_gradient"/>
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="vertical" android:background="@drawable/input_bg_dark" android:padding="12dp">
+                        <TextView android:id="@+id/tv_activity_summary" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Weekly activity will appear here" android:textColor="@color/white" android:textStyle="bold" android:textSize="14sp"/>
+                        <TextView android:id="@+id/tv_activity_detail" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="Complete workouts to build your trend" android:textColor="@color/text_gray" android:textSize="12sp"/>
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
