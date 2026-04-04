@@ -46,9 +46,11 @@ public class Home_dashboard extends AppCompatActivity {
     private TextView tvMacroFat;
     private TextView tvHomeWater;
     private TextView tvFocusSubtitle;
+    private TextView tvFocusBadge;
     private TextView tvHomeWeeklyWorkouts;
     private TextView tvHomeWeeklyMinutes;
     private TextView tvHomeMonthlyWorkouts;
+    private TextView tvHomeNutritionStatus;
     private TextView tvHomeRecentTitle;
     private TextView tvHomeRecentSubtitle;
     private ProgressBar progressKcalRing;
@@ -82,9 +84,11 @@ public class Home_dashboard extends AppCompatActivity {
         progressHomeWater = findViewById(R.id.progress_home_water);
         tvHomeWater = findViewById(R.id.tv_home_water);
         tvFocusSubtitle = findViewById(R.id.tv_focus_subtitle);
+        tvFocusBadge = findViewById(R.id.tv_focus_badge);
         tvHomeWeeklyWorkouts = findViewById(R.id.tv_home_weekly_workouts);
         tvHomeWeeklyMinutes = findViewById(R.id.tv_home_weekly_minutes);
         tvHomeMonthlyWorkouts = findViewById(R.id.tv_home_monthly_workouts);
+        tvHomeNutritionStatus = findViewById(R.id.tv_home_nutrition_status);
         tvHomeRecentTitle = findViewById(R.id.tv_home_recent_title);
         tvHomeRecentSubtitle = findViewById(R.id.tv_home_recent_subtitle);
 
@@ -160,6 +164,7 @@ public class Home_dashboard extends AppCompatActivity {
                     tvMacroProtein.setText("PROTEIN   " + protein + "G / " + dailyProteinGoal + "G");
                     tvMacroCarbs.setText("CARBS   " + carbs + "G / " + dailyCarbsGoal + "G");
                     tvMacroFat.setText("FAT   " + fat + "G / " + dailyFatGoal + "G");
+                    tvHomeNutritionStatus.setText(calories + " kcal consumed today");
 
                     progressKcalRing.setProgress(toPercent(calories, dailyCaloriesGoal));
                     progressMacroProtein.setProgress(toPercent(protein, dailyProteinGoal));
@@ -218,12 +223,16 @@ public class Home_dashboard extends AppCompatActivity {
                     int weeklyMinutes = optInt(data, "weeklyWorkoutMinutes", 0);
                     int monthlyWorkouts = optInt(data, "monthlyWorkoutsCount", 0);
                     int streakDays = optInt(data, "streakDays", 0);
+                    int nutritionCalories = optInt(data, "totalNutritionCalories", 0);
 
                     lblFocus.setText("Today's Focus (" + workoutsCount + " workouts)");
                     tvFocusSubtitle.setText(streakDays > 0 ? streakDays + " day streak active" : "Start your first workout today");
                     tvHomeWeeklyWorkouts.setText(weeklyWorkouts + " workouts this week");
                     tvHomeWeeklyMinutes.setText(weeklyMinutes + " min this week");
                     tvHomeMonthlyWorkouts.setText(monthlyWorkouts + " workouts this month");
+                    if (nutritionCalories > 0) {
+                        tvHomeNutritionStatus.setText(nutritionCalories + " kcal consumed today");
+                    }
 
                     JsonArray recentWorkouts = optArray(data, "recentWorkouts");
                     if (recentWorkouts != null && recentWorkouts.size() > 0) {
@@ -258,6 +267,9 @@ public class Home_dashboard extends AppCompatActivity {
 
         double weightKg = optDouble(profileData, "weightKg", 0);
         String goalText = optString(profileData, "goal", "").toLowerCase(Locale.US);
+        if (!goalText.isEmpty()) {
+            tvFocusBadge.setText(mapGoalToBadge(goalText));
+        }
 
         if (weightKg <= 0) {
             return;
@@ -278,6 +290,22 @@ public class Home_dashboard extends AppCompatActivity {
         dailyProteinGoal = protein;
         dailyFatGoal = fat;
         dailyCarbsGoal = carbs;
+    }
+
+    private String mapGoalToBadge(String goalText) {
+        if (goalText.contains("lose") || goalText.contains("fat") || goalText.contains("cut")) {
+            return "CUT";
+        }
+        if (goalText.contains("gain") || goalText.contains("bulk")) {
+            return "BULK";
+        }
+        if (goalText.contains("endurance") || goalText.contains("cardio")) {
+            return "ENDURANCE";
+        }
+        if (goalText.contains("strength") || goalText.contains("muscle")) {
+            return "STRENGTH";
+        }
+        return "FOCUS";
     }
 
     private int toPercent(int current, int goal) {
