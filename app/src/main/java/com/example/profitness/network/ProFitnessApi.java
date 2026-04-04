@@ -95,6 +95,10 @@ public class ProFitnessApi {
         apiClient.get("/api/nutrition/today-summary", true, parseJson(callback));
     }
 
+    public void getNutritionLogs(ApiCallback<JsonObject> callback) {
+        apiClient.get("/api/nutrition", true, parseJson(callback));
+    }
+
     public void getDashboardSummary(ApiCallback<JsonObject> callback) {
         apiClient.get("/api/dashboard/summary", true, parseJson(callback));
     }
