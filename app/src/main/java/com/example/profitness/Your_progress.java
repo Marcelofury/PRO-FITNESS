@@ -2,6 +2,8 @@ package com.example.profitness;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,12 @@ public class Your_progress extends AppCompatActivity {
     private TextView tvStartWeight;
     private TextView tvStrengthValue;
     private TextView tvRecentAchievement;
+    private TextView tvMetricValue;
+    private TextView tvMetricDelta;
+    private View barWeek1;
+    private View barWeek2;
+    private View barWeek3;
+    private View barWeek4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,12 @@ public class Your_progress extends AppCompatActivity {
         tvStartWeight = findViewById(R.id.tv_start_weight);
         tvStrengthValue = findViewById(R.id.tv_strength_value);
         tvRecentAchievement = findViewById(R.id.tv_recent_achievement);
+        tvMetricValue = findViewById(R.id.tv_metric_value);
+        tvMetricDelta = findViewById(R.id.tv_metric_delta);
+        barWeek1 = findViewById(R.id.bar_week_1);
+        barWeek2 = findViewById(R.id.bar_week_2);
+        barWeek3 = findViewById(R.id.bar_week_3);
+        barWeek4 = findViewById(R.id.bar_week_4);
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
@@ -61,10 +75,20 @@ public class Your_progress extends AppCompatActivity {
                     JsonObject data = result.getAsJsonObject("data");
                     if (data != null && data.has("weightKg") && !data.get("weightKg").isJsonNull()) {
                         double current = data.get("weightKg").getAsDouble();
-                        double start = current + 3.5;
+                        double baseline = current;
 
                         tvCurrentWeight.setText(String.format(Locale.US, "%.1f kg", current));
-                        tvStartWeight.setText(String.format(Locale.US, "START WEIGHT\n%.1f kg", start));
+                        tvStartWeight.setText(String.format(Locale.US, "BASELINE\n%.1f kg", baseline));
+
+                        if (data.has("heightCm") && !data.get("heightCm").isJsonNull()) {
+                            double heightCm = data.get("heightCm").getAsDouble();
+                            if (heightCm > 0) {
+                                double heightM = heightCm / 100.0;
+                                double bmi = current / (heightM * heightM);
+                                tvMetricValue.setText(String.format(Locale.US, "%.1f", bmi));
+                                tvMetricDelta.setText("Calculated from profile");
+                            }
+                        }
                     }
                 });
             }
@@ -88,7 +112,13 @@ public class Your_progress extends AppCompatActivity {
                 runOnUiThread(() -> {
                     JsonObject data = result.getAsJsonObject("data");
                     int workoutsCount = data != null && data.has("workoutsCount") ? data.get("workoutsCount").getAsInt() : 0;
+                    int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 0;
+                    int weeklyMinutes = data != null && data.has("weeklyWorkoutMinutes") ? data.get("weeklyWorkoutMinutes").getAsInt() : 0;
+                    int monthlyWorkouts = data != null && data.has("monthlyWorkoutsCount") ? data.get("monthlyWorkoutsCount").getAsInt() : 0;
+                    int streakDays = data != null && data.has("streakDays") ? data.get("streakDays").getAsInt() : 0;
                     tvRecentAchievement.setText(workoutsCount + " Workouts");
+
+                    updateWeeklyBars(weeklyWorkouts, weeklyMinutes, monthlyWorkouts, streakDays);
 
                     JsonArray recentWorkouts = data != null ? data.getAsJsonArray("recentWorkouts") : null;
                     if (recentWorkouts != null && recentWorkouts.size() > 0) {
@@ -110,5 +140,25 @@ public class Your_progress extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void updateWeeklyBars(int weeklyWorkouts, int weeklyMinutes, int monthlyWorkouts, int streakDays) {
+        updateBarHeight(barWeek1, clampBarHeight(30 + (weeklyWorkouts * 12)));
+        updateBarHeight(barWeek2, clampBarHeight(30 + (weeklyMinutes / 3)));
+        updateBarHeight(barWeek3, clampBarHeight(30 + (monthlyWorkouts * 8)));
+        updateBarHeight(barWeek4, clampBarHeight(30 + (streakDays * 10)));
+    }
+
+    private int clampBarHeight(int heightDp) {
+        return Math.max(30, Math.min(120, heightDp));
+    }
+
+    private void updateBarHeight(View bar, int heightDp) {
+        if (bar == null) {
+            return;
+        }
+        ViewGroup.LayoutParams params = bar.getLayoutParams();
+        params.height = (int) (heightDp * getResources().getDisplayMetrics().density);
+        bar.setLayoutParams(params);
     }
 }
