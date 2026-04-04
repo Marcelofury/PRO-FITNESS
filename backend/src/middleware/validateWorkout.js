@@ -1,9 +1,5 @@
 function validateWorkoutPayload(req, res, next) {
-  const { userId, workoutName, durationMinutes, caloriesBurned } = req.body;
-
-  if (!userId || typeof userId !== 'string' || userId.trim().length === 0) {
-    return res.status(400).json({ success: false, message: 'userId is required' });
-  }
+  const { workoutName, durationMinutes, caloriesBurned } = req.body;
 
   if (!workoutName || typeof workoutName !== 'string' || workoutName.trim().length === 0) {
     return res.status(400).json({ success: false, message: 'workoutName is required' });
