@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:gravity="center"
-                android:text="Barbell Bench Press"
+                android:text="Workout Session"
                 android:textColor="@color/neon_cyan"
                 android:textSize="28sp"
                 android:textStyle="bold" />
