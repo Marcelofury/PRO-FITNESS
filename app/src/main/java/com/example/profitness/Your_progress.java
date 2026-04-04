@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.profitness.navigation.BottomNavHelper;
 import com.example.profitness.network.ApiCallback;
+import com.example.profitness.network.AuthSessionHelper;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -62,7 +63,12 @@ public class Your_progress extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(Your_progress.this, "Could not load profile metrics", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(Your_progress.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(Your_progress.this, "Could not load profile metrics", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
@@ -88,7 +94,12 @@ public class Your_progress extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(Your_progress.this, "Could not load progress summary", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(Your_progress.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(Your_progress.this, "Could not load progress summary", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
