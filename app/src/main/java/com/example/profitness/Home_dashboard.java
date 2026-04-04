@@ -1,6 +1,9 @@
 package com.example.profitness;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,6 +19,8 @@ import com.google.gson.JsonArray;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +33,7 @@ public class Home_dashboard extends AppCompatActivity {
     private static final int DEFAULT_DAILY_CARBS_GOAL = 250;
     private static final int DEFAULT_DAILY_FAT_GOAL = 60;
     private static final int DAILY_WATER_GOAL_ML = 2500;
+    private static final int REQ_NOTIFICATIONS = 402;
 
     private ProFitnessApi api;
     private TextView lblFocus;
@@ -100,6 +106,8 @@ public class Home_dashboard extends AppCompatActivity {
         progressMacroFat.setMax(100);
         progressHomeWater.setMax(100);
 
+        ensureNotificationPermission();
+
         loadUserProfile();
         loadNutritionSummary();
         loadHydrationSummary();
@@ -111,9 +119,10 @@ public class Home_dashboard extends AppCompatActivity {
             @Override
             public void onSuccess(JsonObject result) {
                 runOnUiThread(() -> {
-                    JsonObject data = result.getAsJsonObject("data");
-                    if (data != null && data.has("name")) {
-                        tvWelcomeName.setText(data.get("name").getAsString() + "!");
+                    JsonObject data = getDataObject(result);
+                    String name = optString(data, "name", null);
+                    if (name != null && !name.isEmpty()) {
+                        tvWelcomeName.setText(name + "!");
                     }
 
                     applyProfileBasedGoals(data);
@@ -138,12 +147,12 @@ public class Home_dashboard extends AppCompatActivity {
             @Override
             public void onSuccess(JsonObject result) {
                 runOnUiThread(() -> {
-                    JsonObject data = result.getAsJsonObject("data");
+                    JsonObject data = getDataObject(result);
 
-                    int calories = data != null && data.has("calories") ? data.get("calories").getAsInt() : 0;
-                    int protein = data != null && data.has("proteinGrams") ? data.get("proteinGrams").getAsInt() : 0;
-                    int carbs = data != null && data.has("carbsGrams") ? data.get("carbsGrams").getAsInt() : 0;
-                    int fat = data != null && data.has("fatGrams") ? data.get("fatGrams").getAsInt() : 0;
+                    int calories = optInt(data, "calories", 0);
+                    int protein = optInt(data, "proteinGrams", 0);
+                    int carbs = optInt(data, "carbsGrams", 0);
+                    int fat = optInt(data, "fatGrams", 0);
 
                     int remaining = Math.max(0, dailyCaloriesGoal - calories);
                     tvKcalRemaining.setText(String.format(Locale.US, "%,d", remaining));
@@ -176,8 +185,8 @@ public class Home_dashboard extends AppCompatActivity {
             @Override
             public void onSuccess(JsonObject result) {
                 runOnUiThread(() -> {
-                    JsonObject data = result.getAsJsonObject("data");
-                    int totalMl = data != null && data.has("totalMl") ? data.get("totalMl").getAsInt() : 0;
+                    JsonObject data = getDataObject(result);
+                    int totalMl = optInt(data, "totalMl", 0);
 
                     int glasses = Math.max(0, Math.round(totalMl / 250f));
                     int goalGlasses = DAILY_WATER_GOAL_ML / 250;
@@ -203,12 +212,12 @@ public class Home_dashboard extends AppCompatActivity {
             @Override
             public void onSuccess(JsonObject result) {
                 runOnUiThread(() -> {
-                    JsonObject data = result.getAsJsonObject("data");
-                    int workoutsCount = data != null && data.has("workoutsCount") ? data.get("workoutsCount").getAsInt() : 0;
-                    int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 0;
-                    int weeklyMinutes = data != null && data.has("weeklyWorkoutMinutes") ? data.get("weeklyWorkoutMinutes").getAsInt() : 0;
-                    int monthlyWorkouts = data != null && data.has("monthlyWorkoutsCount") ? data.get("monthlyWorkoutsCount").getAsInt() : 0;
-                    int streakDays = data != null && data.has("streakDays") ? data.get("streakDays").getAsInt() : 0;
+                    JsonObject data = getDataObject(result);
+                    int workoutsCount = optInt(data, "workoutsCount", 0);
+                    int weeklyWorkouts = optInt(data, "weeklyWorkoutsCount", 0);
+                    int weeklyMinutes = optInt(data, "weeklyWorkoutMinutes", 0);
+                    int monthlyWorkouts = optInt(data, "monthlyWorkoutsCount", 0);
+                    int streakDays = optInt(data, "streakDays", 0);
 
                     lblFocus.setText("Today's Focus (" + workoutsCount + " workouts)");
                     tvFocusSubtitle.setText(streakDays > 0 ? streakDays + " day streak active" : "Start your first workout today");
@@ -216,11 +225,11 @@ public class Home_dashboard extends AppCompatActivity {
                     tvHomeWeeklyMinutes.setText(weeklyMinutes + " min this week");
                     tvHomeMonthlyWorkouts.setText(monthlyWorkouts + " workouts this month");
 
-                    JsonArray recentWorkouts = data != null ? data.getAsJsonArray("recentWorkouts") : null;
+                    JsonArray recentWorkouts = optArray(data, "recentWorkouts");
                     if (recentWorkouts != null && recentWorkouts.size() > 0) {
-                        JsonObject first = recentWorkouts.get(0).getAsJsonObject();
-                        String workoutName = first.has("workoutName") ? first.get("workoutName").getAsString() : "Latest Workout";
-                        int duration = first.has("durationMinutes") ? first.get("durationMinutes").getAsInt() : 0;
+                        JsonObject first = recentWorkouts.get(0).isJsonObject() ? recentWorkouts.get(0).getAsJsonObject() : null;
+                        String workoutName = optString(first, "workoutName", "Latest Workout");
+                        int duration = optInt(first, "durationMinutes", 0);
                         tvHomeRecentTitle.setText("Recent: " + workoutName);
                         tvHomeRecentSubtitle.setText(duration + " minutes completed • " + streakDays + " day streak");
                     } else {
@@ -247,12 +256,8 @@ public class Home_dashboard extends AppCompatActivity {
             return;
         }
 
-        double weightKg = profileData.has("weightKg") && !profileData.get("weightKg").isJsonNull()
-                ? profileData.get("weightKg").getAsDouble()
-                : 0;
-        String goalText = profileData.has("goal") && !profileData.get("goal").isJsonNull()
-                ? profileData.get("goal").getAsString().toLowerCase(Locale.US)
-                : "";
+        double weightKg = optDouble(profileData, "weightKg", 0);
+        String goalText = optString(profileData, "goal", "").toLowerCase(Locale.US);
 
         if (weightKg <= 0) {
             return;
@@ -280,5 +285,69 @@ public class Home_dashboard extends AppCompatActivity {
             return 0;
         }
         return Math.max(0, Math.min(100, Math.round((current * 100f) / goal)));
+    }
+
+    private JsonObject getDataObject(JsonObject result) {
+        if (result == null || !result.has("data") || result.get("data").isJsonNull() || !result.get("data").isJsonObject()) {
+            return null;
+        }
+        return result.getAsJsonObject("data");
+    }
+
+    private int optInt(JsonObject object, String key, int fallback) {
+        if (object == null || !object.has(key) || object.get(key).isJsonNull()) {
+            return fallback;
+        }
+        try {
+            return object.get(key).getAsInt();
+        } catch (Exception ignored) {
+            return fallback;
+        }
+    }
+
+    private double optDouble(JsonObject object, String key, double fallback) {
+        if (object == null || !object.has(key) || object.get(key).isJsonNull()) {
+            return fallback;
+        }
+        try {
+            return object.get(key).getAsDouble();
+        } catch (Exception ignored) {
+            return fallback;
+        }
+    }
+
+    private String optString(JsonObject object, String key, String fallback) {
+        if (object == null || !object.has(key) || object.get(key).isJsonNull()) {
+            return fallback;
+        }
+        try {
+            return object.get(key).getAsString();
+        } catch (Exception ignored) {
+            return fallback;
+        }
+    }
+
+    private JsonArray optArray(JsonObject object, String key) {
+        if (object == null || !object.has(key) || object.get(key).isJsonNull() || !object.get(key).isJsonArray()) {
+            return null;
+        }
+        return object.getAsJsonArray(key);
+    }
+
+    private void ensureNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return;
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                REQ_NOTIFICATIONS
+        );
     }
 }
