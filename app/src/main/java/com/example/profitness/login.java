@@ -39,20 +39,12 @@ public class login extends AppCompatActivity {
         TextView tvRegister = findViewById(R.id.tvRegister);
         TextView tvForgotPassword = findViewById(R.id.tvForgotPassword);
         ImageButton btnBack = findViewById(R.id.btnBack);
-        ImageButton btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
-        ImageButton btnAppleSignIn = findViewById(R.id.btnAppleSignIn);
 
         btnBack.setOnClickListener(v -> finish());
         btnLogin.setOnClickListener(v -> performLogin());
-        tvRegister.setOnClickListener(v -> showRegisterDialog());
+        tvRegister.setOnClickListener(v -> startActivity(new Intent(login.this, register.class)));
         tvForgotPassword.setOnClickListener(v ->
             Toast.makeText(this, "Reset password is coming soon", Toast.LENGTH_SHORT).show()
-        );
-        btnGoogleSignIn.setOnClickListener(v ->
-            Toast.makeText(this, "Google sign-in is coming soon", Toast.LENGTH_SHORT).show()
-        );
-        btnAppleSignIn.setOnClickListener(v ->
-            Toast.makeText(this, "Apple sign-in is coming soon", Toast.LENGTH_SHORT).show()
         );
     }
 
