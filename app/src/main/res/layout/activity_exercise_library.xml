@@ -89,6 +89,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/chip_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/bg_chip_selected"
@@ -99,15 +100,19 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/chip_chest"
                         style="@style/CategoryChipStyle"
                         android:text="Chest" />
                     <TextView
+                        android:id="@+id/chip_legs"
                         style="@style/CategoryChipStyle"
                         android:text="Legs" />
                     <TextView
+                        android:id="@+id/chip_cardio"
                         style="@style/CategoryChipStyle"
                         android:text="Cardio" />
                     <TextView
+                        android:id="@+id/chip_back"
                         style="@style/CategoryChipStyle"
                         android:text="Back" />
                 </LinearLayout>
@@ -127,7 +132,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="#0C1C1C"
         app:itemIconTint="@color/nav_colors"
