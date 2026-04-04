@@ -129,6 +129,7 @@
                         <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_chart" app:tint="@color/neon_cyan"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Track Progress" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
                         <TextView android:id="@+id/tv_home_weekly_workouts" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 workouts this week" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                        <TextView android:id="@+id/tv_home_weekly_minutes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 min this week" android:textColor="@color/text_gray" android:textSize="10sp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
