@@ -37,9 +37,9 @@
                     android:orientation="vertical">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="WELCOME BACK," android:textColor="@color/text_gray" android:textSize="10sp" android:letterSpacing="0.1"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    <TextView android:id="@+id/tv_welcome_name" android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Marcel!" android:textColor="@color/white" android:textSize="24sp" android:textStyle="bold"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                    <TextView android:id="@+id/tv_today_date" android:layout_width="wrap_content" android:layout_height="wrap_content"
                         android:text="Monday, June 12" android:textColor="@color/neon_cyan" android:textSize="12sp"/>
                 </LinearLayout>
                 <ImageView android:layout_width="28dp" android:layout_height="28dp"
@@ -74,18 +74,18 @@
                             android:layout_width="wrap_content" android:layout_height="wrap_content"
                             android:layout_gravity="center" android:gravity="center" android:orientation="vertical">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                                android:text="1,850" android:textColor="@color/white" android:textSize="36sp" android:textStyle="bold"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                android:id="@+id/tv_kcal_remaining" android:text="1,850" android:textColor="@color/white" android:textSize="36sp" android:textStyle="bold"/>
+                            <TextView android:id="@+id/tv_kcal_goal" android:layout_width="wrap_content" android:layout_height="wrap_content"
                                 android:text="/ 2,450 KCAL" android:textColor="@color/text_gray" android:textSize="12sp"/>
                         </LinearLayout>
                     </FrameLayout>
 
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginTop="20dp">
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="PROTEIN   120G / 150G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tv_macro_protein" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="PROTEIN   120G / 150G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
                         <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="80" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="CARBS   180G / 250G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tv_macro_carbs" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="CARBS   180G / 250G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
                         <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="72" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp" android:layout_marginBottom="12dp"/>
-                        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="FAT   40G / 60G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tv_macro_fat" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="FAT   40G / 60G" android:textColor="@color/white" android:textSize="11sp" android:textStyle="bold"/>
                         <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="65" android:progressTint="@color/neon_cyan" android:layout_marginTop="4dp"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -158,7 +158,7 @@
                     <LinearLayout android:padding="16dp" android:orientation="vertical">
                         <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_water" app:tint="@color/neon_cyan"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Water Intake" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4/8 glasses today" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                        <TextView android:id="@+id/tv_home_water" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4/8 glasses today" android:textColor="@color/text_gray" android:textSize="10sp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </GridLayout>
@@ -171,8 +171,8 @@
                         <TextView android:id="@+id/lbl_focus" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today's Focus" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:background="@drawable/badge_bg_cyan" android:paddingHorizontal="10dp" android:paddingVertical="4dp" android:text="STRENGTH" android:textColor="@color/neon_cyan" android:textSize="10sp" android:textStyle="bold"/>
                     </RelativeLayout>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chest &amp; Triceps" android:textColor="@color/neon_cyan" android:textSize="18sp" android:layout_marginTop="4dp"/>
-                    <Button android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="20dp" android:text="START WORKOUT" android:backgroundTint="@color/neon_cyan" android:textColor="@android:color/black" android:textStyle="bold" app:cornerRadius="12dp"/>
+                    <TextView android:id="@+id/tv_focus_subtitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Chest &amp; Triceps" android:textColor="@color/neon_cyan" android:textSize="18sp" android:layout_marginTop="4dp"/>
+                    <Button android:id="@+id/btn_start_workout" android:layout_width="match_parent" android:layout_height="56dp" android:layout_marginTop="20dp" android:text="START WORKOUT" android:backgroundTint="@color/neon_cyan" android:textColor="@android:color/black" android:textStyle="bold" app:cornerRadius="12dp"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
