@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp">
                 <ImageView android:id="@+id/prev_day" android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_arrow_left" app:tint="@color/neon_cyan"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true" android:text="Today, Oct 24" android:textColor="@color/white" android:textStyle="bold" android:textSize="16sp"/>
+                <TextView android:id="@+id/tv_day_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true" android:text="Today, Oct 24" android:textColor="@color/white" android:textStyle="bold" android:textSize="16sp"/>
                 <ImageView android:id="@+id/next_day" android:layout_width="24dp" android:layout_height="24dp" android:layout_alignParentEnd="true" android:src="@drawable/ic_arrow_right" app:tint="@color/neon_cyan"/>
             </RelativeLayout>
 
@@ -72,7 +72,7 @@
                     <TextView android:id="@+id/txt_rem" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CALORIES REMAINING" android:textColor="@color/neon_cyan" android:textSize="10sp" android:textStyle="bold" android:letterSpacing="0.1"/>
                     <TextView android:id="@+id/val_cal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/txt_rem" android:text="1,450" android:textColor="@color/white" android:textSize="38sp" android:textStyle="bold" android:layout_marginTop="4dp"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/val_cal" android:layout_alignBaseline="@id/val_cal" android:layout_marginStart="8dp" android:text="kcal" android:textColor="@color/text_gray"/>
-                    <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="120dp" android:layout_height="8dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:progress="60" android:progressDrawable="@drawable/custom_progress_orange"/>
+                    <ProgressBar android:id="@+id/progress_calories" style="?android:attr/progressBarStyleHorizontal" android:layout_width="120dp" android:layout_height="8dp" android:layout_alignParentEnd="true" android:layout_centerVertical="true" android:progress="60" android:progressDrawable="@drawable/custom_progress_orange"/>
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -81,7 +81,7 @@
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="12dp">
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="PROTEIN" android:textColor="@color/neon_cyan" android:textSize="9sp"/>
                         <TextView android:id="@+id/val_protein" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="45g" android:textColor="@color/white" android:textStyle="bold"/>
-                        <ProgressBar style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="30" android:progressTint="@color/neon_cyan" android:layout_marginTop="8dp"/>
+                        <ProgressBar android:id="@+id/progress_protein" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="4dp" android:progress="30" android:progressTint="@color/neon_cyan" android:layout_marginTop="8dp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
             </LinearLayout>
@@ -107,9 +107,9 @@
                 app:cardBackgroundColor="@color/card_bg"
                 app:cardCornerRadius="20dp">
                 <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="16dp">
-                    <TextView android:id="@+id/food1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Oatmeal with Blueberries" android:textColor="@color/white" android:textStyle="bold" android:textSize="16sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/food1" android:text="1 bowl (350g)" android:textColor="@color/neon_cyan" android:textSize="12sp"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="320 kcal" android:textColor="@color/white" android:textStyle="bold"/>
+                    <TextView android:id="@+id/food1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Latest meal" android:textColor="@color/white" android:textStyle="bold" android:textSize="16sp"/>
+                    <TextView android:id="@+id/tv_food_meta" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/food1" android:text="No entries yet" android:textColor="@color/neon_cyan" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tv_food_kcal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="0 kcal" android:textColor="@color/white" android:textStyle="bold"/>
                     <ImageView android:layout_width="20dp" android:layout_height="20dp" android:layout_alignParentEnd="true" android:layout_alignParentBottom="true" android:src="@drawable/ic_edit" app:tint="@color/text_gray"/>
                 </RelativeLayout>
             </com.google.android.material.card.MaterialCardView>
