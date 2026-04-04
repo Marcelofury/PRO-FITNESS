@@ -16,6 +16,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.profitness.network.ApiCallback;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
+import com.example.profitness.navigation.BottomNavHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonObject;
 
 public class nutrition_log extends AppCompatActivity {
@@ -40,6 +42,9 @@ public class nutrition_log extends AppCompatActivity {
         valProtein = findViewById(R.id.val_protein);
         tvWaterTotal = findViewById(R.id.tv_water_total);
         progressWater = findViewById(R.id.progress_water_total);
+
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        BottomNavHelper.setup(this, nav, R.id.nav_nutrition);
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
