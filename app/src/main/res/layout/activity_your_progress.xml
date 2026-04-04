@@ -93,7 +93,7 @@
                 </com.google.android.material.card.MaterialCardView>
             </GridLayout>
 
-            <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="16dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp">
+            <com.google.android.material.card.MaterialCardView android:id="@+id/card_strength_focus" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="16dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp">
                 <LinearLayout android:padding="16dp" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Strength 1RM" android:textColor="@color/white" android:textStyle="bold" android:layout_marginBottom="12dp"/>
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
@@ -114,7 +114,7 @@
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recent Achievements" android:textColor="@color/white" android:textStyle="bold" android:layout_margin="16dp"/>
             <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:scrollbars="none">
                 <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingHorizontal="16dp">
-                    <com.google.android.material.card.MaterialCardView android:layout_width="140dp" android:layout_height="wrap_content" android:layout_marginEnd="12dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp">
+                    <com.google.android.material.card.MaterialCardView android:id="@+id/card_elite_plan" android:layout_width="140dp" android:layout_height="wrap_content" android:layout_marginEnd="12dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp">
                         <LinearLayout android:padding="16dp" android:gravity="center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
                             <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ic_medal" app:tint="@color/neon_cyan" android:background="@drawable/circle_bg_teal" android:padding="8dp"/>
                             <TextView android:id="@+id/tv_recent_achievement" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10 Workouts" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
