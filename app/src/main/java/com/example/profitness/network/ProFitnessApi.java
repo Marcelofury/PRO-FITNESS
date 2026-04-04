@@ -37,11 +37,21 @@ public class ProFitnessApi {
 
     public void updateProfile(String name, Integer age, Integer heightCm, Integer weightKg, String goal, ApiCallback<JsonObject> callback) {
         Map<String, Object> body = new HashMap<>();
-        body.put("name", name);
-        body.put("age", age);
-        body.put("heightCm", heightCm);
-        body.put("weightKg", weightKg);
-        body.put("goal", goal);
+        if (name != null && !name.trim().isEmpty()) {
+            body.put("name", name);
+        }
+        if (age != null) {
+            body.put("age", age);
+        }
+        if (heightCm != null) {
+            body.put("heightCm", heightCm);
+        }
+        if (weightKg != null) {
+            body.put("weightKg", weightKg);
+        }
+        if (goal != null && !goal.trim().isEmpty()) {
+            body.put("goal", goal);
+        }
 
         apiClient.put("/api/users/me", body, true, parseJson(callback));
     }
