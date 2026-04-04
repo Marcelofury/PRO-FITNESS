@@ -2,6 +2,9 @@ package com.example.profitness;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +30,10 @@ public class active_workout extends AppCompatActivity {
     private TextView tvTimerSeconds;
     private TextView tvDurationValue;
     private TextView tvTotalVolume;
+    private TextView tvSetSummary;
+    private EditText etSetWeight;
+    private EditText etSetReps;
+    private int currentSetNumber = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,9 @@ public class active_workout extends AppCompatActivity {
         tvTimerSeconds = findViewById(R.id.tv_timer_seconds);
         tvDurationValue = findViewById(R.id.tv_duration_value);
         tvTotalVolume = findViewById(R.id.tv_total_volume);
+        tvSetSummary = findViewById(R.id.tv_set_summary);
+        etSetWeight = findViewById(R.id.et_set_weight);
+        etSetReps = findViewById(R.id.et_set_reps);
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         BottomNavHelper.setup(this, nav, R.id.nav_workout);
@@ -50,6 +60,7 @@ public class active_workout extends AppCompatActivity {
 
         findViewById(R.id.btn_add_set).setOnClickListener(v -> addSetAndAdvanceTimer());
         findViewById(R.id.btn_save_workout).setOnClickListener(v -> saveWorkout());
+        setupSetInputs();
 
         String prefillWorkoutName = getIntent().getStringExtra("prefill_workout_name");
         if (prefillWorkoutName != null && !prefillWorkoutName.trim().isEmpty()) {
@@ -142,10 +153,11 @@ public class active_workout extends AppCompatActivity {
         int minutes = Math.max(0, safeDuration);
 
         tvExerciseTitle.setText(name);
+        currentSetNumber = 1;
         tvTimerMinutes.setText(String.format(Locale.US, "%02d", minutes));
         tvTimerSeconds.setText("00");
         tvDurationValue.setText(String.format(Locale.US, "%02d:00", minutes));
-        tvTotalVolume.setText(caloriesBurned + " kcal");
+        updateSetSummaryAndVolume();
     }
 
     private int parseDurationMinutesFromUi() {
@@ -165,9 +177,47 @@ public class active_workout extends AppCompatActivity {
     private void addSetAndAdvanceTimer() {
         int currentMinutes = parseDurationMinutesFromUi();
         int updatedMinutes = currentMinutes + 5;
+        currentSetNumber += 1;
         tvTimerMinutes.setText(String.format(Locale.US, "%02d", updatedMinutes));
         tvDurationValue.setText(String.format(Locale.US, "%02d:00", updatedMinutes));
-        tvTotalVolume.setText(estimateCalories(updatedMinutes) + " kcal");
+        updateSetSummaryAndVolume();
         Toast.makeText(this, "Set added", Toast.LENGTH_SHORT).show();
+    }
+
+    private void setupSetInputs() {
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                updateSetSummaryAndVolume();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        };
+
+        etSetWeight.addTextChangedListener(watcher);
+        etSetReps.addTextChangedListener(watcher);
+        updateSetSummaryAndVolume();
+    }
+
+    private int parsePositiveInt(EditText input, int fallback) {
+        try {
+            int value = Integer.parseInt(input.getText().toString().trim());
+            return Math.max(1, value);
+        } catch (Exception ignored) {
+            return fallback;
+        }
+    }
+
+    private void updateSetSummaryAndVolume() {
+        int weight = parsePositiveInt(etSetWeight, 80);
+        int reps = parsePositiveInt(etSetReps, 8);
+        tvSetSummary.setText(currentSetNumber + "   " + weight + "kg x " + reps);
+        tvTotalVolume.setText((currentSetNumber * weight * reps) + " kg");
     }
 }
