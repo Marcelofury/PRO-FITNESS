@@ -1,0 +1,139 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <RelativeLayout
+        android:id="@+id/header_progress"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Your Progress"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_calendar"
+            app:tint="@color/white" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/header_progress"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="40dp">
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:singleSelection="true">
+                <Button android:id="@+id/btn_week" style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_weight="1" android:text="Week" android:textColor="@color/white" app:backgroundTint="@color/neon_cyan"/>
+                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_weight="1" android:text="Month" android:textColor="@color/text_gray"/>
+                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_weight="1" android:text="3 Months" android:textColor="@color/text_gray"/>
+                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_weight="1" android:text="Year" android:textColor="@color/text_gray"/>
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                app:cardBackgroundColor="@color/card_bg"
+                app:cardCornerRadius="24dp">
+                <LinearLayout android:padding="20dp" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <TextView android:id="@+id/t1" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CURRENT WEIGHT" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@id/t1" android:text="78.5 kg" android:textColor="@color/white" android:textSize="26sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="START WEIGHT\n82.0 kg" android:gravity="end" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                    </RelativeLayout>
+                    <View android:layout_width="match_parent" android:layout_height="120dp" android:layout_marginTop="16dp" android:background="@drawable/dummy_graph_gradient"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Body Measurements" android:textColor="@color/white" android:textStyle="bold" android:layout_margin="16dp"/>
+            <GridLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:columnCount="2" android:paddingHorizontal="12dp">
+                <com.google.android.material.card.MaterialCardView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_columnWeight="1" android:layout_margin="4dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="16dp">
+                    <LinearLayout android:padding="16dp" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CHEST" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="102 cm" android:textColor="@color/white" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="+2cm" android:textColor="@color/positive_green" android:textSize="10sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </GridLayout>
+
+            <com.google.android.material.card.MaterialCardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_margin="16dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp">
+                <LinearLayout android:padding="16dp" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Strength 1RM" android:textColor="@color/white" android:textStyle="bold" android:layout_marginBottom="12dp"/>
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Bench Press" android:textColor="@color/text_gray"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentEnd="true" android:text="95kg ↗" android:textColor="@color/white" android:textStyle="bold"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Weekly Volume" android:textColor="@color/white" android:textStyle="bold" android:layout_margin="16dp"/>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="120dp" android:gravity="bottom" android:orientation="horizontal" android:paddingHorizontal="16dp" android:layout_marginBottom="16dp">
+                <View android:layout_width="0dp" android:layout_height="40dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#1A3A3A"/>
+                <View android:layout_width="0dp" android:layout_height="70dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#1A3A3A"/>
+                <View android:layout_width="0dp" android:layout_height="110dp" android:layout_weight="1" android:layout_margin="4dp" android:background="@color/neon_cyan"/>
+                <View android:layout_width="0dp" android:layout_height="50dp" android:layout_weight="1" android:layout_margin="4dp" android:background="#1A3A3A"/>
+            </LinearLayout>
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Recent Achievements" android:textColor="@color/white" android:textStyle="bold" android:layout_margin="16dp"/>
+            <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:scrollbars="none">
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:paddingHorizontal="16dp">
+                    <com.google.android.material.card.MaterialCardView android:layout_width="140dp" android:layout_height="wrap_content" android:layout_marginEnd="12dp" app:cardBackgroundColor="@color/card_bg" app:cardCornerRadius="20dp">
+                        <LinearLayout android:padding="16dp" android:gravity="center" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                            <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ic_medal" app:tint="@color/neon_cyan" android:background="@drawable/circle_bg_teal" android:padding="8dp"/>
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="10 Workouts" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:background="@color/bg_dark"
+        app:itemIconTint="@color/neon_cyan"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
