@@ -31,6 +31,7 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/btn_library"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentEnd="true"
@@ -75,14 +76,14 @@
                 android:orientation="horizontal">
 
                 <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
-                    <TextView android:layout_width="70dp" android:layout_height="70dp" android:background="@drawable/circle_timer_bg" android:gravity="center" android:text="01" android:textColor="@color/white" android:textSize="24sp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tv_timer_minutes" android:layout_width="70dp" android:layout_height="70dp" android:background="@drawable/circle_timer_bg" android:gravity="center" android:text="01" android:textColor="@color/white" android:textSize="24sp" android:textStyle="bold"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="MIN" android:textColor="@color/text_gray" android:textSize="12sp" android:layout_marginTop="8dp"/>
                 </LinearLayout>
 
                 <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=":" android:textColor="@color/white" android:textSize="32sp" android:layout_marginHorizontal="16dp" android:layout_marginBottom="24dp"/>
 
                 <LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content">
-                    <TextView android:layout_width="70dp" android:layout_height="70dp" android:background="@drawable/circle_timer_bg" android:gravity="center" android:text="30" android:textColor="@color/white" android:textSize="24sp" android:textStyle="bold"/>
+                    <TextView android:id="@+id/tv_timer_seconds" android:layout_width="70dp" android:layout_height="70dp" android:background="@drawable/circle_timer_bg" android:gravity="center" android:text="30" android:textColor="@color/white" android:textSize="24sp" android:textStyle="bold"/>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="SEC" android:textColor="@color/text_gray" android:textSize="12sp" android:layout_marginTop="8dp"/>
                 </LinearLayout>
             </LinearLayout>
@@ -118,11 +119,11 @@
                     <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="horizontal">
                         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Total Volume" android:textColor="@color/text_gray" android:textSize="12sp"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4,200 kg" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold"/>
+                            <TextView android:id="@+id/tv_total_volume" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="4,200 kg" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold"/>
                         </LinearLayout>
                         <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Duration" android:textColor="@color/text_gray" android:textSize="12sp"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="35:12" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold"/>
+                            <TextView android:id="@+id/tv_duration_value" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="35:12" android:textColor="@color/white" android:textSize="20sp" android:textStyle="bold"/>
                         </LinearLayout>
                     </LinearLayout>
                     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="Notes" android:textColor="@color/text_gray" android:textSize="12sp"/>
