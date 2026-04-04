@@ -49,6 +49,7 @@ public class Home_dashboard extends AppCompatActivity {
     private ProgressBar progressMacroProtein;
     private ProgressBar progressMacroCarbs;
     private ProgressBar progressMacroFat;
+    private ProgressBar progressHomeWater;
     private int dailyCaloriesGoal = DEFAULT_DAILY_CALORIES_GOAL;
     private int dailyProteinGoal = DEFAULT_DAILY_PROTEIN_GOAL;
     private int dailyCarbsGoal = DEFAULT_DAILY_CARBS_GOAL;
@@ -72,6 +73,7 @@ public class Home_dashboard extends AppCompatActivity {
         progressMacroProtein = findViewById(R.id.progress_macro_protein);
         progressMacroCarbs = findViewById(R.id.progress_macro_carbs);
         progressMacroFat = findViewById(R.id.progress_macro_fat);
+        progressHomeWater = findViewById(R.id.progress_home_water);
         tvHomeWater = findViewById(R.id.tv_home_water);
         tvFocusSubtitle = findViewById(R.id.tv_focus_subtitle);
         tvHomeWeeklyWorkouts = findViewById(R.id.tv_home_weekly_workouts);
@@ -96,6 +98,7 @@ public class Home_dashboard extends AppCompatActivity {
         progressMacroProtein.setMax(100);
         progressMacroCarbs.setMax(100);
         progressMacroFat.setMax(100);
+        progressHomeWater.setMax(100);
 
         loadUserProfile();
         loadNutritionSummary();
@@ -179,6 +182,7 @@ public class Home_dashboard extends AppCompatActivity {
                     int glasses = Math.max(0, Math.round(totalMl / 250f));
                     int goalGlasses = DAILY_WATER_GOAL_ML / 250;
                     tvHomeWater.setText(glasses + "/" + goalGlasses + " glasses today");
+                    progressHomeWater.setProgress(toPercent(totalMl, DAILY_WATER_GOAL_ML));
                 });
             }
 
