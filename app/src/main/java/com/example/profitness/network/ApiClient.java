@@ -1,5 +1,8 @@
 package com.example.profitness.network;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
@@ -35,7 +38,7 @@ public class ApiClient {
 
     public void get(String path, boolean authRequired, ApiCallback<String> callback) {
         Request.Builder builder = new Request.Builder()
-                .url(ApiConfig.BASE_URL + path)
+                .url(buildUrl(path))
                 .get();
 
         applyAuthHeader(builder, authRequired);
@@ -46,7 +49,7 @@ public class ApiClient {
         RequestBody requestBody = RequestBody.create(gson.toJson(body), JSON);
 
         Request.Builder builder = new Request.Builder()
-                .url(ApiConfig.BASE_URL + path)
+                .url(buildUrl(path))
                 .post(requestBody);
 
         applyAuthHeader(builder, authRequired);
@@ -57,7 +60,7 @@ public class ApiClient {
         RequestBody requestBody = RequestBody.create(gson.toJson(body), JSON);
 
         Request.Builder builder = new Request.Builder()
-                .url(ApiConfig.BASE_URL + path)
+                .url(buildUrl(path))
                 .put(requestBody);
 
         applyAuthHeader(builder, authRequired);
@@ -98,5 +101,13 @@ public class ApiClient {
                 }
             }
         });
+    }
+
+    private String buildUrl(String path) {
+        Context context = tokenStore.getAppContext();
+        SharedPreferences prefs = context.getSharedPreferences(ApiConfig.PREFS_NAME, Context.MODE_PRIVATE);
+        String saved = prefs.getString(ApiConfig.KEY_BASE_URL, ApiConfig.DEFAULT_BASE_URL);
+        String baseUrl = ApiConfig.normalizeBaseUrl(saved);
+        return baseUrl + path;
     }
 }
