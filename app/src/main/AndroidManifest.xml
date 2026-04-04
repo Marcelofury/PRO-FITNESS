@@ -49,6 +49,9 @@
             android:name=".exercise_library"
             android:exported="false" />
         <activity
+            android:name=".profile"
+            android:exported="false" />
+        <activity
             android:name=".Home_dashboard"
             android:exported="false" />
         <activity
