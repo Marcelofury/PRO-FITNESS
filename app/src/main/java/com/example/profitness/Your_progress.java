@@ -29,6 +29,8 @@ public class Your_progress extends AppCompatActivity {
     private TextView tvRecentAchievement;
     private TextView tvMetricValue;
     private TextView tvMetricDelta;
+    private TextView tvActivitySummary;
+    private TextView tvActivityDetail;
     private View barWeek1;
     private View barWeek2;
     private View barWeek3;
@@ -46,10 +48,14 @@ public class Your_progress extends AppCompatActivity {
         tvRecentAchievement = findViewById(R.id.tv_recent_achievement);
         tvMetricValue = findViewById(R.id.tv_metric_value);
         tvMetricDelta = findViewById(R.id.tv_metric_delta);
+        tvActivitySummary = findViewById(R.id.tv_activity_summary);
+        tvActivityDetail = findViewById(R.id.tv_activity_detail);
         barWeek1 = findViewById(R.id.bar_week_1);
         barWeek2 = findViewById(R.id.bar_week_2);
         barWeek3 = findViewById(R.id.bar_week_3);
         barWeek4 = findViewById(R.id.bar_week_4);
+
+        tvStrengthValue.setText("No sessions yet");
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
@@ -117,6 +123,8 @@ public class Your_progress extends AppCompatActivity {
                     int monthlyWorkouts = data != null && data.has("monthlyWorkoutsCount") ? data.get("monthlyWorkoutsCount").getAsInt() : 0;
                     int streakDays = data != null && data.has("streakDays") ? data.get("streakDays").getAsInt() : 0;
                     tvRecentAchievement.setText(workoutsCount + " Workouts");
+                    tvActivitySummary.setText(weeklyWorkouts + " workouts • " + weeklyMinutes + " minutes this week");
+                    tvActivityDetail.setText(monthlyWorkouts + " workouts this month • " + streakDays + " day streak");
 
                     updateWeeklyBars(weeklyWorkouts, weeklyMinutes, monthlyWorkouts, streakDays);
 
@@ -126,6 +134,8 @@ public class Your_progress extends AppCompatActivity {
                         String workoutName = first.has("workoutName") ? first.get("workoutName").getAsString() : "Workout";
                         int duration = first.has("durationMinutes") ? first.get("durationMinutes").getAsInt() : 0;
                         tvStrengthValue.setText(workoutName + " • " + duration + "m");
+                    } else {
+                        tvStrengthValue.setText("No sessions yet");
                     }
                 });
             }
