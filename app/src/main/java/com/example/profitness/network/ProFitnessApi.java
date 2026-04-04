@@ -72,6 +72,10 @@ public class ProFitnessApi {
         apiClient.post("/api/hydration", body, true, parseJson(callback));
     }
 
+    public void getHydrationTodayTotal(ApiCallback<JsonObject> callback) {
+        apiClient.get("/api/hydration/today-total", true, parseJson(callback));
+    }
+
     public void addNutrition(String mealName, int calories, int proteinGrams, int carbsGrams, int fatGrams, ApiCallback<JsonObject> callback) {
         Map<String, Object> body = new HashMap<>();
         body.put("mealName", mealName);
@@ -81,6 +85,10 @@ public class ProFitnessApi {
         body.put("fatGrams", fatGrams);
 
         apiClient.post("/api/nutrition", body, true, parseJson(callback));
+    }
+
+    public void getNutritionTodaySummary(ApiCallback<JsonObject> callback) {
+        apiClient.get("/api/nutrition/today-summary", true, parseJson(callback));
     }
 
     public void getDashboardSummary(ApiCallback<JsonObject> callback) {
