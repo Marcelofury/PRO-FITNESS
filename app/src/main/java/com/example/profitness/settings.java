@@ -1,21 +1,28 @@
 package com.example.profitness;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.profitness.network.ApiConfig;
 import com.example.profitness.network.TokenStore;
+import com.example.profitness.notifications.ReminderScheduler;
 
 public class settings extends AppCompatActivity {
 
     private static final String KEY_REMINDER_WORKOUT = "reminder_workout";
     private static final String KEY_REMINDER_HYDRATION = "reminder_hydration";
+    private static final int REQ_NOTIFICATIONS = 401;
 
     private TokenStore tokenStore;
     private SharedPreferences prefs;
@@ -36,13 +43,33 @@ public class settings extends AppCompatActivity {
         switchHydrationReminder.setChecked(prefs.getBoolean(KEY_REMINDER_HYDRATION, true));
 
         switchWorkoutReminder.setOnCheckedChangeListener((buttonView, isChecked) ->
-            prefs.edit().putBoolean(KEY_REMINDER_WORKOUT, isChecked).apply()
-        );
+        {
+            prefs.edit().putBoolean(KEY_REMINDER_WORKOUT, isChecked).apply();
+            if (isChecked) {
+                ensureNotificationPermission();
+                ReminderScheduler.scheduleWorkoutReminder(settings.this);
+            } else {
+                ReminderScheduler.cancelWorkoutReminder(settings.this);
+            }
+        });
         switchHydrationReminder.setOnCheckedChangeListener((buttonView, isChecked) ->
-            prefs.edit().putBoolean(KEY_REMINDER_HYDRATION, isChecked).apply()
-        );
+        {
+            prefs.edit().putBoolean(KEY_REMINDER_HYDRATION, isChecked).apply();
+            if (isChecked) {
+                ensureNotificationPermission();
+                ReminderScheduler.scheduleHydrationReminder(settings.this);
+            } else {
+                ReminderScheduler.cancelHydrationReminder(settings.this);
+            }
+        });
 
         tvAppVersion.setText("App version " + getAppVersionName());
+
+        // Ensure schedules are aligned with persisted toggle states.
+        syncReminderSchedules(
+            switchWorkoutReminder.isChecked(),
+            switchHydrationReminder.isChecked()
+        );
 
         findViewById(R.id.btn_settings_back).setOnClickListener(v -> finish());
         findViewById(R.id.btn_settings_profile).setOnClickListener(v ->
@@ -76,5 +103,36 @@ public class settings extends AppCompatActivity {
         } catch (Exception ignored) {
             return "1.0";
         }
+    }
+
+    private void syncReminderSchedules(boolean workoutEnabled, boolean hydrationEnabled) {
+        if (workoutEnabled) {
+            ReminderScheduler.scheduleWorkoutReminder(this);
+        } else {
+            ReminderScheduler.cancelWorkoutReminder(this);
+        }
+
+        if (hydrationEnabled) {
+            ReminderScheduler.scheduleHydrationReminder(this);
+        } else {
+            ReminderScheduler.cancelHydrationReminder(this);
+        }
+    }
+
+    private void ensureNotificationPermission() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            return;
+        }
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                REQ_NOTIFICATIONS
+        );
     }
 }
