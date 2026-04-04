@@ -13,10 +13,16 @@ import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.example.profitness.navigation.BottomNavHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class hydration_tracker extends AppCompatActivity {
 
@@ -49,6 +55,7 @@ public class hydration_tracker extends AppCompatActivity {
         findViewById(R.id.quick_add_500).setOnClickListener(v -> addWater(500));
         findViewById(R.id.quick_add_750).setOnClickListener(v -> addWater(750));
         findViewById(R.id.quick_add_custom).setOnClickListener(v -> showCustomWaterInputDialog());
+        findViewById(R.id.tv_view_history).setOnClickListener(v -> showHydrationHistory());
 
         loadTodayTotal();
     }
@@ -139,5 +146,55 @@ public class hydration_tracker extends AppCompatActivity {
                     addWater(amount);
                 })
                 .show();
+    }
+
+    private void showHydrationHistory() {
+        api.getHydrationLogs(new ApiCallback<JsonObject>() {
+            @Override
+            public void onSuccess(JsonObject result) {
+                runOnUiThread(() -> {
+                    JsonArray data = result != null && result.has("data") && result.get("data").isJsonArray()
+                            ? result.getAsJsonArray("data")
+                            : null;
+
+                    List<String> rows = new ArrayList<>();
+                    if (data != null) {
+                        int max = Math.min(20, data.size());
+                        for (int i = 0; i < max; i++) {
+                            JsonElement element = data.get(i);
+                            if (!element.isJsonObject()) {
+                                continue;
+                            }
+                            JsonObject log = element.getAsJsonObject();
+                            int amount = log.has("amountMl") && !log.get("amountMl").isJsonNull()
+                                    ? log.get("amountMl").getAsInt()
+                                    : 0;
+                            rows.add(String.format(Locale.US, "%d ml", amount));
+                        }
+                    }
+
+                    if (rows.isEmpty()) {
+                        rows.add("No hydration logs yet");
+                    }
+
+                    CharSequence[] items = rows.toArray(new CharSequence[0]);
+                    new AlertDialog.Builder(hydration_tracker.this)
+                            .setTitle("Hydration History")
+                            .setItems(items, null)
+                            .setPositiveButton("Close", null)
+                            .show();
+                });
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(hydration_tracker.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(hydration_tracker.this, "Failed to load hydration history", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
     }
 }
