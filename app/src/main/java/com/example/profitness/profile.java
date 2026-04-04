@@ -19,6 +19,10 @@ import com.example.profitness.network.TokenStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class profile extends AppCompatActivity {
 
     private ProFitnessApi api;
@@ -29,6 +33,7 @@ public class profile extends AppCompatActivity {
     private TextView tvProfileAge;
     private TextView tvProfileHeight;
     private TextView tvProfileWeight;
+    private TextView tvProfileSyncStatus;
     private Integer currentAge;
     private Integer currentHeightCm;
     private Integer currentWeightKg;
@@ -47,6 +52,7 @@ public class profile extends AppCompatActivity {
         tvProfileAge = findViewById(R.id.tv_profile_age);
         tvProfileHeight = findViewById(R.id.tv_profile_height);
         tvProfileWeight = findViewById(R.id.tv_profile_weight);
+        tvProfileSyncStatus = findViewById(R.id.tv_profile_sync_status);
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         BottomNavHelper.setup(this, nav, R.id.nav_profile);
@@ -63,19 +69,23 @@ public class profile extends AppCompatActivity {
     }
 
     private void loadProfile() {
+        setLoadingState();
         api.getMe(new ApiCallback<JsonObject>() {
             @Override
             public void onSuccess(JsonObject result) {
                 runOnUiThread(() -> {
-                    JsonObject data = result.getAsJsonObject("data");
+                    JsonObject data = result != null && result.has("data") && result.get("data").isJsonObject()
+                            ? result.getAsJsonObject("data")
+                            : null;
                     if (data == null) {
+                        tvProfileSyncStatus.setText("Profile unavailable right now");
                         Toast.makeText(profile.this, "Profile data unavailable", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
-                    String name = data.has("name") ? data.get("name").getAsString() : "No name";
-                    String email = data.has("email") ? data.get("email").getAsString() : "No email";
-                    String goal = data.has("goal") ? data.get("goal").getAsString() : "Not set";
+                    String name = data.has("name") && !data.get("name").isJsonNull() ? data.get("name").getAsString() : "Not set";
+                    String email = data.has("email") && !data.get("email").isJsonNull() ? data.get("email").getAsString() : "Not set";
+                    String goal = data.has("goal") && !data.get("goal").isJsonNull() ? data.get("goal").getAsString() : "Not set";
 
                     currentAge = parseNullableInt(data, "age");
                     currentHeightCm = parseNullableInt(data, "heightCm");
@@ -87,6 +97,7 @@ public class profile extends AppCompatActivity {
                     tvProfileAge.setText(currentAge != null ? currentAge + " years" : "Not set");
                     tvProfileHeight.setText(currentHeightCm != null ? currentHeightCm + " cm" : "Not set");
                     tvProfileWeight.setText(currentWeightKg != null ? currentWeightKg + " kg" : "Not set");
+                    tvProfileSyncStatus.setText("Last synced " + new SimpleDateFormat("MMM d, h:mm a", Locale.US).format(new Date()));
                 });
             }
 
@@ -96,10 +107,21 @@ public class profile extends AppCompatActivity {
                     if (AuthSessionHelper.handleIfAuthExpired(profile.this, errorMessage)) {
                         return;
                     }
+                    tvProfileSyncStatus.setText("Sync failed");
                     Toast.makeText(profile.this, "Could not load profile", Toast.LENGTH_SHORT).show();
                 });
             }
         });
+    }
+
+    private void setLoadingState() {
+        tvProfileSyncStatus.setText("Syncing profile...");
+        tvProfileName.setText("Loading...");
+        tvProfileEmail.setText("Loading...");
+        tvProfileGoal.setText("Loading...");
+        tvProfileAge.setText("Loading...");
+        tvProfileHeight.setText("Loading...");
+        tvProfileWeight.setText("Loading...");
     }
 
     private void logout() {
