@@ -2,6 +2,7 @@ package com.example.profitness;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,10 @@ public class Home_dashboard extends AppCompatActivity {
     private TextView tvHomeMonthlyWorkouts;
     private TextView tvHomeRecentTitle;
     private TextView tvHomeRecentSubtitle;
+    private ProgressBar progressKcalRing;
+    private ProgressBar progressMacroProtein;
+    private ProgressBar progressMacroCarbs;
+    private ProgressBar progressMacroFat;
     private int dailyCaloriesGoal = DEFAULT_DAILY_CALORIES_GOAL;
     private int dailyProteinGoal = DEFAULT_DAILY_PROTEIN_GOAL;
     private int dailyCarbsGoal = DEFAULT_DAILY_CARBS_GOAL;
@@ -63,6 +68,10 @@ public class Home_dashboard extends AppCompatActivity {
         tvMacroProtein = findViewById(R.id.tv_macro_protein);
         tvMacroCarbs = findViewById(R.id.tv_macro_carbs);
         tvMacroFat = findViewById(R.id.tv_macro_fat);
+        progressKcalRing = findViewById(R.id.progress_kcal_ring);
+        progressMacroProtein = findViewById(R.id.progress_macro_protein);
+        progressMacroCarbs = findViewById(R.id.progress_macro_carbs);
+        progressMacroFat = findViewById(R.id.progress_macro_fat);
         tvHomeWater = findViewById(R.id.tv_home_water);
         tvFocusSubtitle = findViewById(R.id.tv_focus_subtitle);
         tvHomeWeeklyWorkouts = findViewById(R.id.tv_home_weekly_workouts);
@@ -81,6 +90,11 @@ public class Home_dashboard extends AppCompatActivity {
         findViewById(R.id.card_home_hydration).setOnClickListener(v -> startActivity(new Intent(this, hydration_tracker.class)));
 
         tvTodayDate.setText(new SimpleDateFormat("EEEE, MMM d", Locale.US).format(new Date()));
+
+        progressKcalRing.setMax(100);
+        progressMacroProtein.setMax(100);
+        progressMacroCarbs.setMax(100);
+        progressMacroFat.setMax(100);
 
         loadUserProfile();
         loadNutritionSummary();
@@ -133,6 +147,11 @@ public class Home_dashboard extends AppCompatActivity {
                     tvMacroProtein.setText("PROTEIN   " + protein + "G / " + dailyProteinGoal + "G");
                     tvMacroCarbs.setText("CARBS   " + carbs + "G / " + dailyCarbsGoal + "G");
                     tvMacroFat.setText("FAT   " + fat + "G / " + dailyFatGoal + "G");
+
+                    progressKcalRing.setProgress(toPercent(calories, dailyCaloriesGoal));
+                    progressMacroProtein.setProgress(toPercent(protein, dailyProteinGoal));
+                    progressMacroCarbs.setProgress(toPercent(carbs, dailyCarbsGoal));
+                    progressMacroFat.setProgress(toPercent(fat, dailyFatGoal));
                 });
             }
 
@@ -249,5 +268,12 @@ public class Home_dashboard extends AppCompatActivity {
         dailyProteinGoal = protein;
         dailyFatGoal = fat;
         dailyCarbsGoal = carbs;
+    }
+
+    private int toPercent(int current, int goal) {
+        if (goal <= 0) {
+            return 0;
+        }
+        return Math.max(0, Math.min(100, Math.round((current * 100f) / goal)));
     }
 }
