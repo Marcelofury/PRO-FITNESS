@@ -8,6 +8,7 @@ import com.example.profitness.R;
 import com.example.profitness.Your_progress;
 import com.example.profitness.active_workout;
 import com.example.profitness.nutrition_log;
+import com.example.profitness.profile;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public final class BottomNavHelper {
@@ -32,6 +33,8 @@ public final class BottomNavHelper {
                 intent = new Intent(activity, nutrition_log.class);
             } else if (id == R.id.nav_progress) {
                 intent = new Intent(activity, Your_progress.class);
+            } else if (id == R.id.nav_profile) {
+                intent = new Intent(activity, profile.class);
             } else {
                 return false;
             }
