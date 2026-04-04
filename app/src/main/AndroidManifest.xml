@@ -12,6 +12,49 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProFitness">
         <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.ProFitness">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".intensity_focus"
+            android:exported="false" />
+        <activity
+            android:name=".hydration_tracker"
+            android:exported="false" />
+        <activity
+            android:name=".exercise_details"
+            android:exported="false" />
+        <activity
+            android:name=".active_workout"
+            android:exported="false" />
+        <activity
+            android:name=".Your_progress"
+            android:exported="false" />
+        <activity
+            android:name=".Elite_plan"
+            android:exported="false" />
+        <activity
+            android:name=".nutrition_log"
+            android:exported="false" />
+        <activity
+            android:name=".exercise_library"
+            android:exported="false" />
+        <activity
+            android:name=".Home_dashboard"
+            android:exported="false" />
+        <activity
+            android:name=".register5"
+            android:exported="false" />
+        <activity
+            android:name=".register4"
+            android:exported="false" />
+        <activity
             android:name=".register3"
             android:exported="false"
             android:theme="@style/Theme.ProFitness" />
@@ -29,15 +72,9 @@
             android:theme="@style/Theme.ProFitness" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"
+            android:exported="false"
             android:label="@string/app_name"
-            android:theme="@style/Theme.ProFitness">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/Theme.ProFitness" />
     </application>
 
 </manifest>
