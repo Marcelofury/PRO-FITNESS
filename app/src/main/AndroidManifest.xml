@@ -78,6 +78,10 @@
             android:exported="false"
             android:theme="@style/Theme.ProFitness" />
         <activity
+            android:name=".register"
+            android:exported="false"
+            android:theme="@style/Theme.ProFitness" />
+        <activity
             android:name=".welcome_screen"
             android:exported="false"
             android:theme="@style/Theme.ProFitness" />
