@@ -3,8 +3,30 @@ package com.example.profitness.network;
 public final class ApiConfig {
     private ApiConfig() {}
 
-    // Emulator: 10.0.2.2, physical device: replace with your PC LAN IP.
-    public static final String BASE_URL = "http://10.0.2.2:5000";
+    // Default local URL; override at runtime from Settings for Render or LAN use.
+    public static final String DEFAULT_BASE_URL = "http://10.0.2.2:5000";
     public static final String PREFS_NAME = "profitness_prefs";
     public static final String KEY_TOKEN = "jwt_token";
+    public static final String KEY_BASE_URL = "api_base_url";
+
+    public static String normalizeBaseUrl(String rawUrl) {
+        if (rawUrl == null) {
+            return DEFAULT_BASE_URL;
+        }
+
+        String trimmed = rawUrl.trim();
+        if (trimmed.isEmpty()) {
+            return DEFAULT_BASE_URL;
+        }
+
+        if (!trimmed.startsWith("http://") && !trimmed.startsWith("https://")) {
+            trimmed = "https://" + trimmed;
+        }
+
+        while (trimmed.endsWith("/")) {
+            trimmed = trimmed.substring(0, trimmed.length() - 1);
+        }
+
+        return trimmed;
+    }
 }
