@@ -18,10 +18,12 @@ router.put('/me', auth, async (req, res) => {
     const user = await User.findByIdAndUpdate(req.user._id, updates, {
       new: true,
       runValidators: true,
-      select: '-passwordHash',
     });
 
-    return res.json({ success: true, data: user });
+    const userObject = user.toObject();
+    delete userObject.passwordHash;
+
+    return res.json({ success: true, data: userObject });
   } catch (error) {
     return res.status(500).json({ success: false, message: 'Failed to update user profile' });
   }
