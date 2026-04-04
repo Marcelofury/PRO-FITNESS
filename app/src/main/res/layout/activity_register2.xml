@@ -57,6 +57,7 @@
         android:textSize="14sp" />
 
     <RelativeLayout
+        android:id="@+id/cardGoalLose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -93,6 +94,7 @@
         </LinearLayout>
 
         <RadioButton
+            android:id="@+id/rbGoalLose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -102,6 +104,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/cardGoalBuild"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -139,6 +142,7 @@
         </LinearLayout>
 
         <RadioButton
+            android:id="@+id/rbGoalBuild"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -147,6 +151,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/cardGoalKeep"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -184,6 +189,7 @@
         </LinearLayout>
 
         <RadioButton
+            android:id="@+id/rbGoalKeep"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -191,6 +197,7 @@
             android:buttonTint="#4DFFFFFF" />
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/cardGoalEndurance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
@@ -228,6 +235,7 @@
         </LinearLayout>
 
         <RadioButton
+            android:id="@+id/rbGoalEndurance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
