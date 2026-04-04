@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.profitness.network.ApiCallback;
+import com.example.profitness.network.AuthSessionHelper;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.example.profitness.navigation.BottomNavHelper;
@@ -116,7 +117,12 @@ public class nutrition_log extends AppCompatActivity {
 
                         @Override
                         public void onError(String errorMessage) {
-                            runOnUiThread(() -> Toast.makeText(nutrition_log.this, errorMessage, Toast.LENGTH_LONG).show());
+                            runOnUiThread(() -> {
+                                if (AuthSessionHelper.handleIfAuthExpired(nutrition_log.this, errorMessage)) {
+                                    return;
+                                }
+                                Toast.makeText(nutrition_log.this, errorMessage, Toast.LENGTH_LONG).show();
+                            });
                         }
                     });
                 })
@@ -135,7 +141,12 @@ public class nutrition_log extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(nutrition_log.this, errorMessage, Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(nutrition_log.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(nutrition_log.this, errorMessage, Toast.LENGTH_LONG).show();
+                });
             }
         });
     }
@@ -157,7 +168,12 @@ public class nutrition_log extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(nutrition_log.this, "Failed to load nutrition summary", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(nutrition_log.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(nutrition_log.this, "Failed to load nutrition summary", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
@@ -178,7 +194,12 @@ public class nutrition_log extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(nutrition_log.this, "Failed to load hydration data", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(nutrition_log.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(nutrition_log.this, "Failed to load hydration data", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
