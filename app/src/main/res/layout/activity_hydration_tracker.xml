@@ -14,6 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
+            android:id="@+id/btn_back"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_centerVertical="true"
@@ -78,20 +79,20 @@
                     android:gravity="center"
                     android:orientation="vertical">
                     <ImageView android:layout_width="32dp" android:layout_height="32dp" android:src="@drawable/ic_water_drop" app:tint="@color/neon_cyan" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1.8 / 2.5L" android:textColor="@color/white" android:textSize="32sp" android:textStyle="bold" />
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="72% of Daily Goal" android:textColor="@color/neon_cyan" android:textSize="14sp" />
+                    <TextView android:id="@+id/tv_water_progress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1.8 / 2.5L" android:textColor="@color/white" android:textSize="32sp" android:textStyle="bold" />
+                    <TextView android:id="@+id/tv_water_percent" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="72% of Daily Goal" android:textColor="@color/neon_cyan" android:textSize="14sp" />
                 </LinearLayout>
             </FrameLayout>
 
-            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Last drink: 24 mins ago" android:gravity="center" android:textColor="@color/text_gray" android:layout_marginTop="16dp"/>
+            <TextView android:id="@+id/tv_last_drink" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Last drink: 24 mins ago" android:gravity="center" android:textColor="@color/text_gray" android:layout_marginTop="16dp"/>
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="QUICK ADD" android:textColor="@color/neon_cyan" android:textSize="12sp" android:textStyle="bold" android:layout_marginTop="32dp"/>
 
             <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:orientation="horizontal">
-                <include layout="@layout/item_quick_add_water_250" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
-                <include layout="@layout/item_quick_add_water_500" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp"/>
-                <include layout="@layout/item_quick_add_water_750" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp"/>
-                <include layout="@layout/item_quick_add_water_custom" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp"/>
+                <include android:id="@+id/quick_add_250" layout="@layout/item_quick_add_water_250" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+                <include android:id="@+id/quick_add_500" layout="@layout/item_quick_add_water_500" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp"/>
+                <include android:id="@+id/quick_add_750" layout="@layout/item_quick_add_water_750" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp"/>
+                <include android:id="@+id/quick_add_custom" layout="@layout/item_quick_add_water_custom" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="8dp"/>
             </LinearLayout>
 
             <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="32dp">
