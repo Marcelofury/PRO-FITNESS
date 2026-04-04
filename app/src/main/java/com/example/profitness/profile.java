@@ -26,6 +26,9 @@ public class profile extends AppCompatActivity {
     private TextView tvProfileName;
     private TextView tvProfileEmail;
     private TextView tvProfileGoal;
+    private TextView tvProfileAge;
+    private TextView tvProfileHeight;
+    private TextView tvProfileWeight;
     private Integer currentAge;
     private Integer currentHeightCm;
     private Integer currentWeightKg;
@@ -41,6 +44,9 @@ public class profile extends AppCompatActivity {
         tvProfileName = findViewById(R.id.tv_profile_name);
         tvProfileEmail = findViewById(R.id.tv_profile_email);
         tvProfileGoal = findViewById(R.id.tv_profile_goal);
+        tvProfileAge = findViewById(R.id.tv_profile_age);
+        tvProfileHeight = findViewById(R.id.tv_profile_height);
+        tvProfileWeight = findViewById(R.id.tv_profile_weight);
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         BottomNavHelper.setup(this, nav, R.id.nav_profile);
@@ -78,6 +84,9 @@ public class profile extends AppCompatActivity {
                     tvProfileName.setText(name);
                     tvProfileEmail.setText(email);
                     tvProfileGoal.setText(goal);
+                    tvProfileAge.setText(currentAge != null ? currentAge + " years" : "Not set");
+                    tvProfileHeight.setText(currentHeightCm != null ? currentHeightCm + " cm" : "Not set");
+                    tvProfileWeight.setText(currentWeightKg != null ? currentWeightKg + " kg" : "Not set");
                 });
             }
 
@@ -150,6 +159,10 @@ public class profile extends AppCompatActivity {
     }
 
     private void submitProfileUpdate(String name, Integer age, Integer heightCm, Integer weightKg, String goal) {
+        if (!isValidProfileInput(name, age, heightCm, weightKg)) {
+            return;
+        }
+
         api.updateProfile(name, age, heightCm, weightKg, goal, new ApiCallback<JsonObject>() {
             @Override
             public void onSuccess(JsonObject result) {
@@ -169,6 +182,30 @@ public class profile extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private boolean isValidProfileInput(String name, Integer age, Integer heightCm, Integer weightKg) {
+        if (name != null && !name.isEmpty() && name.length() < 2) {
+            Toast.makeText(this, "Name must be at least 2 characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (age != null && (age < 1 || age > 120)) {
+            Toast.makeText(this, "Age must be between 1 and 120", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (heightCm != null && (heightCm < 50 || heightCm > 300)) {
+            Toast.makeText(this, "Height must be between 50 and 300 cm", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (weightKg != null && (weightKg < 10 || weightKg > 500)) {
+            Toast.makeText(this, "Weight must be between 10 and 500 kg", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     private Integer parseIntegerOrNull(String value) {
