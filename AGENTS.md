@@ -1,0 +1,1 @@
+1. after each change push to github i.e changes should be equal to commits made
