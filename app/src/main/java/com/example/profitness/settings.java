@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.example.profitness.network.ApiConfig;
@@ -50,7 +51,16 @@ public class settings extends AppCompatActivity {
         findViewById(R.id.btn_settings_dashboard).setOnClickListener(v ->
                 startActivity(new Intent(settings.this, Home_dashboard.class))
         );
-        findViewById(R.id.btn_settings_logout).setOnClickListener(v -> logout());
+        findViewById(R.id.btn_settings_logout).setOnClickListener(v -> confirmLogout());
+    }
+
+    private void confirmLogout() {
+        new AlertDialog.Builder(this)
+                .setTitle("Log out")
+                .setMessage("Are you sure you want to log out?")
+                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Log out", (dialog, which) -> logout())
+                .show();
     }
 
     private void logout() {
