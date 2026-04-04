@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="Hypertrophy &amp; Core Stability"
+                android:text="Training Plan"
                 android:textColor="@color/neon_cyan"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -48,7 +48,7 @@
                 android:id="@+id/tv_plan_phase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Current Phase: Strength Accumulation"
+                android:text="Loading plan details..."
                 android:textColor="@color/text_gray"
                 android:textSize="14sp" />
 
@@ -80,8 +80,8 @@
                 <LinearLayout android:padding="16dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
                     <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ic_timer"  android:background="@drawable/circle_bg_teal" android:padding="8dp"/>
                     <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="16dp">
-                        <TextView android:id="@+id/tv_day_focus_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Push Day - Strength Focus" android:textColor="@color/white" android:textStyle="bold"/>
-                        <TextView android:id="@+id/tv_day_focus_duration" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Estimated Duration: 45 mins" android:textColor="@color/text_gray" android:textSize="12sp"/>
+                        <TextView android:id="@+id/tv_day_focus_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Next session will appear here" android:textColor="@color/white" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tv_day_focus_duration" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Estimated Duration: --" android:textColor="@color/text_gray" android:textSize="12sp"/>
                     </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
@@ -96,9 +96,9 @@
                 <LinearLayout android:padding="16dp" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
                         <TextView android:id="@+id/idx1" android:layout_width="24dp" android:layout_height="24dp" android:background="@drawable/circle_bg_cyan" android:text="1" android:gravity="center" android:textColor="@android:color/black" android:textStyle="bold"/>
-                        <TextView android:id="@+id/tv_plan_exercise" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/idx1" android:layout_marginStart="12dp" android:text="Barbell Bench Press" android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold"/>
+                        <TextView android:id="@+id/tv_plan_exercise" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/idx1" android:layout_marginStart="12dp" android:text="No recent workout" android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold"/>
                     </RelativeLayout>
-                    <TextView android:id="@+id/tv_plan_sets" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="4 x 8-10  |  90s rest" android:textColor="@color/text_gray"/>
+                    <TextView android:id="@+id/tv_plan_sets" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="Log a workout to see details" android:textColor="@color/text_gray"/>
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="match_parent" android:layout_height="180dp"
                         android:layout_marginTop="16dp" android:scaleType="centerCrop"
