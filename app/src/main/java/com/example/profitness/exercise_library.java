@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.profitness.navigation.BottomNavHelper;
 import com.example.profitness.network.ApiCallback;
+import com.example.profitness.network.AuthSessionHelper;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -89,7 +90,12 @@ public class exercise_library extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(exercise_library.this, "Failed to load exercises", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(exercise_library.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(exercise_library.this, "Failed to load exercises", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
