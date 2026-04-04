@@ -207,12 +207,15 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <LinearLayout
+        android:id="@+id/ageCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/r4_bg_counter"
         android:gravity="center"
         android:padding="6dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnContinue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAgeLabel">
 
