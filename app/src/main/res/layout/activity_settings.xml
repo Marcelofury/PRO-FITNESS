@@ -42,6 +42,49 @@
         android:backgroundTint="@color/card_bg"
         android:textColor="@color/white" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Reminders"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_settings_workout_reminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Workout reminders"
+        android:textColor="@color/white" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_settings_hydration_reminder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Hydration reminders"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="About"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_settings_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="App version"
+        android:textColor="@color/text_gray"
+        android:textSize="13sp" />
+
     <Button
         android:id="@+id/btn_settings_logout"
         android:layout_width="match_parent"
