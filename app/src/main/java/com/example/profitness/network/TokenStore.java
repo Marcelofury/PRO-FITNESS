@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class TokenStore {
+    private final Context appContext;
     private final SharedPreferences prefs;
 
     public TokenStore(Context context) {
-        prefs = context.getSharedPreferences(ApiConfig.PREFS_NAME, Context.MODE_PRIVATE);
+        appContext = context.getApplicationContext();
+        prefs = appContext.getSharedPreferences(ApiConfig.PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     public void saveToken(String token) {
@@ -20,5 +22,9 @@ public class TokenStore {
 
     public void clearToken() {
         prefs.edit().remove(ApiConfig.KEY_TOKEN).apply();
+    }
+
+    public Context getAppContext() {
+        return appContext;
     }
 }
