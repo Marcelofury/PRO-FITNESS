@@ -1,0 +1,135 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark">
+
+    <RelativeLayout
+        android:id="@+id/header_workout"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <ImageView android:id="@+id/btn_back" android:layout_width="24dp" android:layout_height="24dp" android:layout_centerVertical="true" android:src="@drawable/ic_back" app:tint="@color/white" />
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true" android:text="Your Elite Plan" android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/main_scroll_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        app:layout_constraintTop_toBottomOf="@id/header_workout"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="120dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Hypertrophy &amp; Core Stability"
+                android:textColor="@color/neon_cyan"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Phase: Strength Accumulation"
+                android:textColor="@color/text_gray"
+                android:textSize="14sp" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/transparent"
+                app:tabIndicatorColor="@color/neon_cyan"
+                app:tabSelectedTextColor="@color/neon_cyan"
+                app:tabTextColor="@color/text_gray"
+                app:tabMode="fixed">
+                <com.google.android.material.tabs.TabItem android:text="Mon" />
+                <com.google.android.material.tabs.TabItem android:text="Tue" />
+                <com.google.android.material.tabs.TabItem android:text="Wed" />
+                <com.google.android.material.tabs.TabItem android:text="Thu" />
+                <com.google.android.material.tabs.TabItem android:text="Fri" />
+                <com.google.android.material.tabs.TabItem android:text="Sat" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardBackgroundColor="@color/card_bg"
+                app:cardCornerRadius="24dp"
+                app:strokeWidth="0dp">
+                <LinearLayout android:padding="16dp" android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <ImageView android:layout_width="40dp" android:layout_height="40dp" android:src="@drawable/ic_timer"  android:background="@drawable/circle_bg_teal" android:padding="8dp"/>
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginStart="16dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Push Day - Strength Focus" android:textColor="@color/white" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Estimated Duration: 45 mins" android:textColor="@color/text_gray" android:textSize="12sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="#1A222E"
+                app:cardCornerRadius="20dp">
+                <LinearLayout android:padding="16dp" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                        <TextView android:id="@+id/idx1" android:layout_width="24dp" android:layout_height="24dp" android:background="@drawable/circle_bg_cyan" android:text="1" android:gravity="center" android:textColor="@android:color/black" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/idx1" android:layout_marginStart="12dp" android:text="Barbell Bench Press" android:textColor="@color/white" android:textSize="18sp" android:textStyle="bold"/>
+                    </RelativeLayout>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="4 x 8-10  |  90s rest" android:textColor="@color/text_gray"/>
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="match_parent" android:layout_height="180dp"
+                        android:layout_marginTop="16dp" android:scaleType="centerCrop"
+                        android:src="@drawable/bench_press_preview"
+                        app:shapeAppearanceOverlay="@style/RoundedImage12"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_start_workout"
+        android:layout_width="wrap_content"
+        android:layout_height="64dp"
+        android:layout_marginBottom="16dp"
+        android:text="START WORKOUT"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_play"
+        app:cornerRadius="32dp"
+        android:backgroundTint="@color/neon_cyan"
+        android:paddingHorizontal="32dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:background="@color/bg_dark"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
