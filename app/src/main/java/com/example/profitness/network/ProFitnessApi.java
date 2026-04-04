@@ -95,6 +95,10 @@ public class ProFitnessApi {
         apiClient.get("/api/dashboard/summary", true, parseJson(callback));
     }
 
+    public void getWorkouts(ApiCallback<JsonObject> callback) {
+        apiClient.get("/api/workouts", true, parseJson(callback));
+    }
+
     public void getExerciseLibrary(ApiCallback<JsonObject> callback) {
         apiClient.get("/api/exercises", false, parseJson(callback));
     }
