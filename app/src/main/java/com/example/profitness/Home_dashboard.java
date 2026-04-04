@@ -11,6 +11,7 @@ import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.example.profitness.navigation.BottomNavHelper;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonArray;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,10 @@ public class Home_dashboard extends AppCompatActivity {
     private TextView tvMacroFat;
     private TextView tvHomeWater;
     private TextView tvFocusSubtitle;
+    private TextView tvHomeWeeklyWorkouts;
+    private TextView tvHomeMonthlyWorkouts;
+    private TextView tvHomeRecentTitle;
+    private TextView tvHomeRecentSubtitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,10 @@ public class Home_dashboard extends AppCompatActivity {
         tvMacroFat = findViewById(R.id.tv_macro_fat);
         tvHomeWater = findViewById(R.id.tv_home_water);
         tvFocusSubtitle = findViewById(R.id.tv_focus_subtitle);
+        tvHomeWeeklyWorkouts = findViewById(R.id.tv_home_weekly_workouts);
+        tvHomeMonthlyWorkouts = findViewById(R.id.tv_home_monthly_workouts);
+        tvHomeRecentTitle = findViewById(R.id.tv_home_recent_title);
+        tvHomeRecentSubtitle = findViewById(R.id.tv_home_recent_subtitle);
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         BottomNavHelper.setup(this, nav, R.id.nav_home);
@@ -159,8 +168,25 @@ public class Home_dashboard extends AppCompatActivity {
                 runOnUiThread(() -> {
                     JsonObject data = result.getAsJsonObject("data");
                     int workoutsCount = data != null && data.has("workoutsCount") ? data.get("workoutsCount").getAsInt() : 0;
+                    int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 0;
+                    int monthlyWorkouts = data != null && data.has("monthlyWorkoutsCount") ? data.get("monthlyWorkoutsCount").getAsInt() : 0;
+
                     lblFocus.setText("Today's Focus (" + workoutsCount + " workouts)");
                     tvFocusSubtitle.setText(workoutsCount > 0 ? "Keep your streak alive" : "Start your first workout today");
+                    tvHomeWeeklyWorkouts.setText(weeklyWorkouts + " workouts this week");
+                    tvHomeMonthlyWorkouts.setText(monthlyWorkouts + " workouts this month");
+
+                    JsonArray recentWorkouts = data != null ? data.getAsJsonArray("recentWorkouts") : null;
+                    if (recentWorkouts != null && recentWorkouts.size() > 0) {
+                        JsonObject first = recentWorkouts.get(0).getAsJsonObject();
+                        String workoutName = first.has("workoutName") ? first.get("workoutName").getAsString() : "Latest Workout";
+                        int duration = first.has("durationMinutes") ? first.get("durationMinutes").getAsInt() : 0;
+                        tvHomeRecentTitle.setText("Recent: " + workoutName);
+                        tvHomeRecentSubtitle.setText(duration + " minutes completed");
+                    } else {
+                        tvHomeRecentTitle.setText("No workouts yet");
+                        tvHomeRecentSubtitle.setText("Start a workout to build your streak");
+                    }
                 });
             }
 
