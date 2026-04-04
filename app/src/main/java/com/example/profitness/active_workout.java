@@ -48,9 +48,15 @@ public class active_workout extends AppCompatActivity {
             startActivity(new Intent(active_workout.this, exercise_library.class))
         );
 
+        findViewById(R.id.btn_add_set).setOnClickListener(v -> addSetAndAdvanceTimer());
         findViewById(R.id.btn_save_workout).setOnClickListener(v -> saveWorkout());
 
-        loadLatestWorkout();
+        String prefillWorkoutName = getIntent().getStringExtra("prefill_workout_name");
+        if (prefillWorkoutName != null && !prefillWorkoutName.trim().isEmpty()) {
+            applyWorkoutToUi(prefillWorkoutName, 35, estimateCalories(35));
+        } else {
+            loadLatestWorkout();
+        }
     }
 
     private void saveWorkout() {
@@ -154,5 +160,14 @@ public class active_workout extends AppCompatActivity {
 
     private int estimateCalories(int durationMinutes) {
         return Math.max(80, durationMinutes * 8);
+    }
+
+    private void addSetAndAdvanceTimer() {
+        int currentMinutes = parseDurationMinutesFromUi();
+        int updatedMinutes = currentMinutes + 5;
+        tvTimerMinutes.setText(String.format(Locale.US, "%02d", updatedMinutes));
+        tvDurationValue.setText(String.format(Locale.US, "%02d:00", updatedMinutes));
+        tvTotalVolume.setText(estimateCalories(updatedMinutes) + " kcal");
+        Toast.makeText(this, "Set added", Toast.LENGTH_SHORT).show();
     }
 }
