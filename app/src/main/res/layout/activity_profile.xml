@@ -79,6 +79,57 @@
             android:textColor="#111827"
             android:textSize="17sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Age"
+            android:textColor="#74809A"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_profile_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="-"
+            android:textColor="#111827"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Height"
+            android:textColor="#74809A"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_profile_height"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="-"
+            android:textColor="#111827"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="Weight"
+            android:textColor="#74809A"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_profile_weight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="-"
+            android:textColor="#111827"
+            android:textSize="17sp" />
+
         <Button
             android:id="@+id/btn_profile_refresh"
             android:layout_width="match_parent"
