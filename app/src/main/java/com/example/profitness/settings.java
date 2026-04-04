@@ -1,15 +1,23 @@
 package com.example.profitness;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
+import com.example.profitness.network.ApiConfig;
 import com.example.profitness.network.TokenStore;
 
 public class settings extends AppCompatActivity {
 
+    private static final String KEY_REMINDER_WORKOUT = "reminder_workout";
+    private static final String KEY_REMINDER_HYDRATION = "reminder_hydration";
+
     private TokenStore tokenStore;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +25,23 @@ public class settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         tokenStore = new TokenStore(this);
+        prefs = getSharedPreferences(ApiConfig.PREFS_NAME, MODE_PRIVATE);
+
+        SwitchCompat switchWorkoutReminder = findViewById(R.id.switch_settings_workout_reminder);
+        SwitchCompat switchHydrationReminder = findViewById(R.id.switch_settings_hydration_reminder);
+        TextView tvAppVersion = findViewById(R.id.tv_settings_version);
+
+        switchWorkoutReminder.setChecked(prefs.getBoolean(KEY_REMINDER_WORKOUT, true));
+        switchHydrationReminder.setChecked(prefs.getBoolean(KEY_REMINDER_HYDRATION, true));
+
+        switchWorkoutReminder.setOnCheckedChangeListener((buttonView, isChecked) ->
+            prefs.edit().putBoolean(KEY_REMINDER_WORKOUT, isChecked).apply()
+        );
+        switchHydrationReminder.setOnCheckedChangeListener((buttonView, isChecked) ->
+            prefs.edit().putBoolean(KEY_REMINDER_HYDRATION, isChecked).apply()
+        );
+
+        tvAppVersion.setText("App version " + BuildConfig.VERSION_NAME);
 
         findViewById(R.id.btn_settings_back).setOnClickListener(v -> finish());
         findViewById(R.id.btn_settings_profile).setOnClickListener(v ->
