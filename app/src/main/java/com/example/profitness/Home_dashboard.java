@@ -6,6 +6,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.profitness.network.ApiCallback;
+import com.example.profitness.network.AuthSessionHelper;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.example.profitness.navigation.BottomNavHelper;
@@ -82,7 +83,12 @@ public class Home_dashboard extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(Home_dashboard.this, "Could not load profile", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(Home_dashboard.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(Home_dashboard.this, "Could not load profile", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
@@ -110,7 +116,12 @@ public class Home_dashboard extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(Home_dashboard.this, "Could not load nutrition data", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(Home_dashboard.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(Home_dashboard.this, "Could not load nutrition data", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
@@ -131,7 +142,12 @@ public class Home_dashboard extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(Home_dashboard.this, "Could not load hydration data", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(Home_dashboard.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(Home_dashboard.this, "Could not load hydration data", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
@@ -150,7 +166,12 @@ public class Home_dashboard extends AppCompatActivity {
 
             @Override
             public void onError(String errorMessage) {
-                runOnUiThread(() -> Toast.makeText(Home_dashboard.this, "Dashboard sync failed", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(Home_dashboard.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(Home_dashboard.this, "Dashboard sync failed", Toast.LENGTH_SHORT).show();
+                });
             }
         });
     }
