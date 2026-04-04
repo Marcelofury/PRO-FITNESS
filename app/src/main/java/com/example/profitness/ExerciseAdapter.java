@@ -27,6 +27,15 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     }
 
     private final List<ExerciseItem> items = new ArrayList<>();
+    private final OnExerciseClickListener clickListener;
+
+    public interface OnExerciseClickListener {
+        void onExerciseClick(ExerciseItem item);
+    }
+
+    public ExerciseAdapter(OnExerciseClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
 
     public void submit(List<ExerciseItem> newItems) {
         items.clear();
@@ -46,6 +55,11 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         ExerciseItem item = items.get(position);
         holder.tvName.setText(item.name);
         holder.tvMeta.setText(item.muscleGroup + " • " + item.difficulty + " • " + item.defaultDurationMinutes + " min");
+        holder.itemView.setOnClickListener(v -> {
+            if (clickListener != null) {
+                clickListener.onExerciseClick(item);
+            }
+        });
     }
 
     @Override
