@@ -69,6 +69,10 @@ public class Home_dashboard extends AppCompatActivity {
         BottomNavHelper.setup(this, nav, R.id.nav_home);
 
         findViewById(R.id.btn_start_workout).setOnClickListener(v -> startActivity(new Intent(this, active_workout.class)));
+        findViewById(R.id.card_home_workout).setOnClickListener(v -> startActivity(new Intent(this, active_workout.class)));
+        findViewById(R.id.card_home_progress).setOnClickListener(v -> startActivity(new Intent(this, Your_progress.class)));
+        findViewById(R.id.card_home_nutrition).setOnClickListener(v -> startActivity(new Intent(this, nutrition_log.class)));
+        findViewById(R.id.card_home_hydration).setOnClickListener(v -> startActivity(new Intent(this, hydration_tracker.class)));
 
         tvTodayDate.setText(new SimpleDateFormat("EEEE, MMM d", Locale.US).format(new Date()));
 
@@ -170,9 +174,10 @@ public class Home_dashboard extends AppCompatActivity {
                     int workoutsCount = data != null && data.has("workoutsCount") ? data.get("workoutsCount").getAsInt() : 0;
                     int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 0;
                     int monthlyWorkouts = data != null && data.has("monthlyWorkoutsCount") ? data.get("monthlyWorkoutsCount").getAsInt() : 0;
+                    int streakDays = data != null && data.has("streakDays") ? data.get("streakDays").getAsInt() : 0;
 
                     lblFocus.setText("Today's Focus (" + workoutsCount + " workouts)");
-                    tvFocusSubtitle.setText(workoutsCount > 0 ? "Keep your streak alive" : "Start your first workout today");
+                    tvFocusSubtitle.setText(streakDays > 0 ? streakDays + " day streak active" : "Start your first workout today");
                     tvHomeWeeklyWorkouts.setText(weeklyWorkouts + " workouts this week");
                     tvHomeMonthlyWorkouts.setText(monthlyWorkouts + " workouts this month");
 
@@ -182,7 +187,7 @@ public class Home_dashboard extends AppCompatActivity {
                         String workoutName = first.has("workoutName") ? first.get("workoutName").getAsString() : "Latest Workout";
                         int duration = first.has("durationMinutes") ? first.get("durationMinutes").getAsInt() : 0;
                         tvHomeRecentTitle.setText("Recent: " + workoutName);
-                        tvHomeRecentSubtitle.setText(duration + " minutes completed");
+                        tvHomeRecentSubtitle.setText(duration + " minutes completed • " + streakDays + " day streak");
                     } else {
                         tvHomeRecentTitle.setText("No workouts yet");
                         tvHomeRecentSubtitle.setText("Start a workout to build your streak");
