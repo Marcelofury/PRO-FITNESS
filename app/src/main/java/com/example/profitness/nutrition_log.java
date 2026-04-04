@@ -19,7 +19,13 @@ import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.example.profitness.navigation.BottomNavHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class nutrition_log extends AppCompatActivity {
 
@@ -27,9 +33,15 @@ public class nutrition_log extends AppCompatActivity {
     private static final int DAILY_WATER_GOAL_ML = 2500;
 
     private ProFitnessApi api;
+    private TextView tvDayLabel;
     private TextView valCal;
     private TextView valProtein;
+    private TextView tvFoodName;
+    private TextView tvFoodMeta;
+    private TextView tvFoodKcal;
     private TextView tvWaterTotal;
+    private ProgressBar progressCalories;
+    private ProgressBar progressProtein;
     private ProgressBar progressWater;
 
     @Override
@@ -39,9 +51,15 @@ public class nutrition_log extends AppCompatActivity {
 
         api = new ProFitnessApi(new TokenStore(this));
 
+        tvDayLabel = findViewById(R.id.tv_day_label);
         valCal = findViewById(R.id.val_cal);
         valProtein = findViewById(R.id.val_protein);
+        tvFoodName = findViewById(R.id.food1);
+        tvFoodMeta = findViewById(R.id.tv_food_meta);
+        tvFoodKcal = findViewById(R.id.tv_food_kcal);
         tvWaterTotal = findViewById(R.id.tv_water_total);
+        progressCalories = findViewById(R.id.progress_calories);
+        progressProtein = findViewById(R.id.progress_protein);
         progressWater = findViewById(R.id.progress_water_total);
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
@@ -55,7 +73,10 @@ public class nutrition_log extends AppCompatActivity {
         findViewById(R.id.btn_add_250ml).setOnClickListener(v -> addWater(250));
         findViewById(R.id.btn_add_500ml).setOnClickListener(v -> addWater(500));
 
+        tvDayLabel.setText("Today, " + new SimpleDateFormat("MMM d", Locale.US).format(new Date()));
+
         loadNutritionSummary();
+        loadLatestMeal();
         loadHydrationSummary();
     }
 
@@ -112,6 +133,7 @@ public class nutrition_log extends AppCompatActivity {
                             runOnUiThread(() -> {
                                 Toast.makeText(nutrition_log.this, "Food added", Toast.LENGTH_SHORT).show();
                                 loadNutritionSummary();
+                                loadLatestMeal();
                             });
                         }
 
@@ -161,8 +183,12 @@ public class nutrition_log extends AppCompatActivity {
                     int protein = data != null && data.has("proteinGrams") ? data.get("proteinGrams").getAsInt() : 0;
 
                     int remaining = Math.max(0, DAILY_CALORIES_GOAL - calories);
-                    valCal.setText(String.format(java.util.Locale.US, "%,d", remaining));
+                    valCal.setText(String.format(Locale.US, "%,d", remaining));
                     valProtein.setText(protein + "g");
+                    progressCalories.setMax(100);
+                    progressCalories.setProgress(Math.min(100, (int) ((calories * 100f) / DAILY_CALORIES_GOAL)));
+                    progressProtein.setMax(100);
+                    progressProtein.setProgress(Math.min(100, (int) ((protein * 100f) / 150f)));
                 });
             }
 
@@ -173,6 +199,62 @@ public class nutrition_log extends AppCompatActivity {
                         return;
                     }
                     Toast.makeText(nutrition_log.this, "Failed to load nutrition summary", Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+    }
+
+    private void loadLatestMeal() {
+        api.getNutritionLogs(new ApiCallback<JsonObject>() {
+            @Override
+            public void onSuccess(JsonObject result) {
+                runOnUiThread(() -> {
+                    JsonArray data = result != null && result.has("data") && result.get("data").isJsonArray()
+                            ? result.getAsJsonArray("data")
+                            : null;
+
+                    if (data == null || data.size() == 0) {
+                        tvFoodName.setText("No meals logged yet");
+                        tvFoodMeta.setText("Tap + Add Food to log your first meal");
+                        tvFoodKcal.setText("0 kcal");
+                        return;
+                    }
+
+                    JsonElement first = data.get(0);
+                    if (!first.isJsonObject()) {
+                        return;
+                    }
+
+                    JsonObject latest = first.getAsJsonObject();
+                    String mealName = latest.has("mealName") && !latest.get("mealName").isJsonNull()
+                            ? latest.get("mealName").getAsString()
+                            : "Meal";
+                    int calories = latest.has("calories") && !latest.get("calories").isJsonNull()
+                            ? latest.get("calories").getAsInt()
+                            : 0;
+                    int protein = latest.has("proteinGrams") && !latest.get("proteinGrams").isJsonNull()
+                            ? latest.get("proteinGrams").getAsInt()
+                            : 0;
+                    int carbs = latest.has("carbsGrams") && !latest.get("carbsGrams").isJsonNull()
+                            ? latest.get("carbsGrams").getAsInt()
+                            : 0;
+                    int fat = latest.has("fatGrams") && !latest.get("fatGrams").isJsonNull()
+                            ? latest.get("fatGrams").getAsInt()
+                            : 0;
+
+                    tvFoodName.setText(mealName);
+                    tvFoodMeta.setText("P " + protein + "g • C " + carbs + "g • F " + fat + "g");
+                    tvFoodKcal.setText(calories + " kcal");
+                });
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                runOnUiThread(() -> {
+                    if (AuthSessionHelper.handleIfAuthExpired(nutrition_log.this, errorMessage)) {
+                        return;
+                    }
+                    Toast.makeText(nutrition_log.this, "Failed to load meal logs", Toast.LENGTH_SHORT).show();
                 });
             }
         });
