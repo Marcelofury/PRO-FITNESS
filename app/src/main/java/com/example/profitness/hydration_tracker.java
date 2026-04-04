@@ -8,6 +8,8 @@ import android.widget.Toast;
 import com.example.profitness.network.ApiCallback;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
+import com.example.profitness.navigation.BottomNavHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonObject;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +35,9 @@ public class hydration_tracker extends AppCompatActivity {
         tvWaterProgress = findViewById(R.id.tv_water_progress);
         tvWaterPercent = findViewById(R.id.tv_water_percent);
         tvLastDrink = findViewById(R.id.tv_last_drink);
+
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        BottomNavHelper.setup(this, nav, R.id.nav_nutrition);
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
 
