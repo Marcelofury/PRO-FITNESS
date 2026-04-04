@@ -23,6 +23,11 @@ Example:
 - List workouts: `GET http://localhost:5000/api/workouts`
 - Create workout: `POST http://localhost:5000/api/workouts`
 
+## Troubleshooting
+- If startup fails with `MONGODB_URI still contains placeholders`, open `.env` and replace `<username>`, `<password>`, and `<cluster-name>` with real values from MongoDB Atlas.
+- If startup fails with `querySrv EBADNAME`, your `.env` still has an invalid Atlas host value.
+- If you use a local MongoDB instance instead of Atlas, set `MONGODB_URI=mongodb://127.0.0.1:27017/profitness`.
+
 Sample POST body:
 
 ```json
