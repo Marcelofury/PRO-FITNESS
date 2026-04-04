@@ -110,7 +110,7 @@
                     <LinearLayout android:padding="16dp" android:orientation="vertical">
                         <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_weight" app:tint="@color/neon_cyan"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Log Workout" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Record exercises" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                        <TextView android:id="@+id/tv_home_monthly_workouts" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 workouts this month" android:textColor="@color/text_gray" android:textSize="10sp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -126,7 +126,7 @@
                     <LinearLayout android:padding="16dp" android:orientation="vertical">
                         <ImageView android:layout_width="24dp" android:layout_height="24dp" android:src="@drawable/ic_chart" app:tint="@color/neon_cyan"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Track Progress" android:textColor="@color/white" android:textStyle="bold" android:layout_marginTop="8dp"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="View charts &amp; stats" android:textColor="@color/text_gray" android:textSize="10sp"/>
+                        <TextView android:id="@+id/tv_home_weekly_workouts" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 workouts this week" android:textColor="@color/text_gray" android:textSize="10sp"/>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -182,8 +182,8 @@
                     <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:padding="8dp">
                         <com.google.android.material.imageview.ShapeableImageView android:id="@+id/icon1" android:layout_width="40dp" android:layout_height="40dp" android:padding="8dp" android:background="#1A3A3A" android:src="@drawable/ic_medal" app:tint="@color/neon_cyan" app:shapeAppearanceOverlay="@style/CircleImage"/>
                         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_toEndOf="@id/icon1" android:layout_marginStart="12dp" android:orientation="vertical">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Goal Smashed!" android:textColor="@color/white" android:textStyle="bold"/>
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="7-day workout streak achieved" android:textColor="@color/text_gray" android:textSize="12sp"/>
+                            <TextView android:id="@+id/tv_home_recent_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Goal Smashed!" android:textColor="@color/white" android:textStyle="bold"/>
+                            <TextView android:id="@+id/tv_home_recent_subtitle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="7-day workout streak achieved" android:textColor="@color/text_gray" android:textSize="12sp"/>
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
