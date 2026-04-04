@@ -7,7 +7,9 @@ import android.widget.Toast;
 import com.example.profitness.network.ApiCallback;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
+import com.example.profitness.navigation.BottomNavHelper;
 import com.google.gson.JsonObject;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +25,10 @@ public class Home_dashboard extends AppCompatActivity {
 
         api = new ProFitnessApi(new TokenStore(this));
         lblFocus = findViewById(R.id.lbl_focus);
+
+        BottomNavigationView nav = findViewById(R.id.bottom_navigation);
+        BottomNavHelper.setup(this, nav, R.id.nav_home);
+
         loadDashboardSummary();
     }
 
