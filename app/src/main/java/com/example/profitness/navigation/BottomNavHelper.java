@@ -14,6 +14,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public final class BottomNavHelper {
     private BottomNavHelper() {}
 
+    private static void openProgress(Activity activity) {
+        Intent intent = new Intent(activity, Your_progress.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        activity.startActivity(intent);
+    }
+
     public static void setup(Activity activity, BottomNavigationView nav, int selectedItemId) {
         nav.setSelectedItemId(selectedItemId);
 
@@ -22,9 +28,7 @@ public final class BottomNavHelper {
 
             if (id == selectedItemId) {
                 if (id == R.id.nav_progress && !(activity instanceof Your_progress)) {
-                    Intent intent = new Intent(activity, Your_progress.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    activity.startActivity(intent);
+                    openProgress(activity);
                 }
                 return true;
             }
@@ -47,6 +51,12 @@ public final class BottomNavHelper {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             activity.startActivity(intent);
             return true;
+        });
+
+        nav.setOnItemReselectedListener(item -> {
+            if (item.getItemId() == R.id.nav_progress && !(activity instanceof Your_progress)) {
+                openProgress(activity);
+            }
         });
     }
 }
