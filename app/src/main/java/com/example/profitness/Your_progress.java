@@ -78,7 +78,7 @@ public class Your_progress extends AppCompatActivity {
             @Override
             public void onSuccess(JsonObject result) {
                 runOnUiThread(() -> {
-                    JsonObject data = result.getAsJsonObject("data");
+                    JsonObject data = getDataObject(result);
                     if (data != null && data.has("weightKg") && !data.get("weightKg").isJsonNull()) {
                         double current = data.get("weightKg").getAsDouble();
                         double baseline = current;
@@ -116,23 +116,23 @@ public class Your_progress extends AppCompatActivity {
             @Override
             public void onSuccess(JsonObject result) {
                 runOnUiThread(() -> {
-                    JsonObject data = result.getAsJsonObject("data");
-                    int workoutsCount = data != null && data.has("workoutsCount") ? data.get("workoutsCount").getAsInt() : 0;
-                    int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 0;
-                    int weeklyMinutes = data != null && data.has("weeklyWorkoutMinutes") ? data.get("weeklyWorkoutMinutes").getAsInt() : 0;
-                    int monthlyWorkouts = data != null && data.has("monthlyWorkoutsCount") ? data.get("monthlyWorkoutsCount").getAsInt() : 0;
-                    int streakDays = data != null && data.has("streakDays") ? data.get("streakDays").getAsInt() : 0;
+                    JsonObject data = getDataObject(result);
+                    int workoutsCount = optInt(data, "workoutsCount", 0);
+                    int weeklyWorkouts = optInt(data, "weeklyWorkoutsCount", 0);
+                    int weeklyMinutes = optInt(data, "weeklyWorkoutMinutes", 0);
+                    int monthlyWorkouts = optInt(data, "monthlyWorkoutsCount", 0);
+                    int streakDays = optInt(data, "streakDays", 0);
                     tvRecentAchievement.setText(workoutsCount + " Workouts");
                     tvActivitySummary.setText(weeklyWorkouts + " workouts • " + weeklyMinutes + " minutes this week");
                     tvActivityDetail.setText(monthlyWorkouts + " workouts this month • " + streakDays + " day streak");
 
                     updateWeeklyBars(weeklyWorkouts, weeklyMinutes, monthlyWorkouts, streakDays);
 
-                    JsonArray recentWorkouts = data != null ? data.getAsJsonArray("recentWorkouts") : null;
-                    if (recentWorkouts != null && recentWorkouts.size() > 0) {
+                    JsonArray recentWorkouts = optArray(data, "recentWorkouts");
+                    if (recentWorkouts != null && recentWorkouts.size() > 0 && recentWorkouts.get(0).isJsonObject()) {
                         JsonObject first = recentWorkouts.get(0).getAsJsonObject();
-                        String workoutName = first.has("workoutName") ? first.get("workoutName").getAsString() : "Workout";
-                        int duration = first.has("durationMinutes") ? first.get("durationMinutes").getAsInt() : 0;
+                        String workoutName = optString(first, "workoutName", "Workout");
+                        int duration = optInt(first, "durationMinutes", 0);
                         tvStrengthValue.setText(workoutName + " • " + duration + "m");
                     } else {
                         tvStrengthValue.setText("No sessions yet");
@@ -170,5 +170,41 @@ public class Your_progress extends AppCompatActivity {
         ViewGroup.LayoutParams params = bar.getLayoutParams();
         params.height = (int) (heightDp * getResources().getDisplayMetrics().density);
         bar.setLayoutParams(params);
+    }
+
+    private JsonObject getDataObject(JsonObject result) {
+        if (result == null || !result.has("data") || result.get("data").isJsonNull() || !result.get("data").isJsonObject()) {
+            return null;
+        }
+        return result.getAsJsonObject("data");
+    }
+
+    private int optInt(JsonObject source, String key, int fallback) {
+        if (source == null || !source.has(key) || source.get(key).isJsonNull()) {
+            return fallback;
+        }
+        try {
+            return source.get(key).getAsInt();
+        } catch (Exception ignored) {
+            return fallback;
+        }
+    }
+
+    private String optString(JsonObject source, String key, String fallback) {
+        if (source == null || !source.has(key) || source.get(key).isJsonNull()) {
+            return fallback;
+        }
+        try {
+            return source.get(key).getAsString();
+        } catch (Exception ignored) {
+            return fallback;
+        }
+    }
+
+    private JsonArray optArray(JsonObject source, String key) {
+        if (source == null || !source.has(key) || source.get(key).isJsonNull() || !source.get(key).isJsonArray()) {
+            return null;
+        }
+        return source.getAsJsonArray(key);
     }
 }

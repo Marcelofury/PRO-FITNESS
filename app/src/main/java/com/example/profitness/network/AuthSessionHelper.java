@@ -13,11 +13,14 @@ public final class AuthSessionHelper {
             return false;
         }
 
-        String msg = errorMessage.toLowerCase();
+        String msg = errorMessage.toLowerCase().trim();
         return msg.contains("invalid or expired token")
                 || msg.contains("invalid token user")
                 || msg.contains("missing or invalid authorization header")
-                || msg.contains("401");
+                || msg.startsWith("request failed with status 401")
+                || msg.contains("\"status\":401")
+                || msg.contains("\"statuscode\":401")
+                || msg.contains("unauthorized");
     }
 
     public static boolean handleIfAuthExpired(Activity activity, String errorMessage) {
