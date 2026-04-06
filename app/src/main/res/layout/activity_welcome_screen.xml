@@ -74,8 +74,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="POWERED BY PROPERFORMANCE"
-        android:textColor="#80FFFFFF"
+        android:text="BUILT BY BUTERA MARCEL, SEP24/BSE/4705CCR/F"
+        android:textColor="#FFFFFFFF"
+
         android:textSize="10sp" />
 
 </LinearLayout>
