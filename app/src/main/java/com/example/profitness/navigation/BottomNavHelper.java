@@ -21,6 +21,11 @@ public final class BottomNavHelper {
             int id = item.getItemId();
 
             if (id == selectedItemId) {
+                if (id == R.id.nav_progress && !(activity instanceof Your_progress)) {
+                    Intent intent = new Intent(activity, Your_progress.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    activity.startActivity(intent);
+                }
                 return true;
             }
 

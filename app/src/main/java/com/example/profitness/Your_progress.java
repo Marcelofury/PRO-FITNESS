@@ -79,15 +79,17 @@ public class Your_progress extends AppCompatActivity {
             public void onSuccess(JsonObject result) {
                 runOnUiThread(() -> {
                     JsonObject data = getDataObject(result);
-                    if (data != null && data.has("weightKg") && !data.get("weightKg").isJsonNull()) {
-                        double current = data.get("weightKg").getAsDouble();
+                    Double currentWeight = optDouble(data, "weightKg");
+                    if (currentWeight != null) {
+                        double current = currentWeight;
                         double baseline = current;
 
                         tvCurrentWeight.setText(String.format(Locale.US, "%.1f kg", current));
                         tvStartWeight.setText(String.format(Locale.US, "BASELINE\n%.1f kg", baseline));
 
-                        if (data.has("heightCm") && !data.get("heightCm").isJsonNull()) {
-                            double heightCm = data.get("heightCm").getAsDouble();
+                        Double heightCmValue = optDouble(data, "heightCm");
+                        if (heightCmValue != null) {
+                            double heightCm = heightCmValue;
                             if (heightCm > 0) {
                                 double heightM = heightCm / 100.0;
                                 double bmi = current / (heightM * heightM);
@@ -206,5 +208,16 @@ public class Your_progress extends AppCompatActivity {
             return null;
         }
         return source.getAsJsonArray(key);
+    }
+
+    private Double optDouble(JsonObject source, String key) {
+        if (source == null || !source.has(key) || source.get(key).isJsonNull()) {
+            return null;
+        }
+        try {
+            return source.get(key).getAsDouble();
+        } catch (Exception ignored) {
+            return null;
+        }
     }
 }
