@@ -1,5 +1,6 @@
 package com.example.profitness;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -52,6 +53,10 @@ public class intensity_focus extends AppCompatActivity {
         chipRest120 = findViewById(R.id.chip_rest_120);
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_notification).setOnClickListener(v -> {
+            Toast.makeText(this, "Open notification preferences", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, settings.class));
+        });
 
         setupRestChipInteractions();
         switchDeload.setOnCheckedChangeListener((buttonView, isChecked) -> {

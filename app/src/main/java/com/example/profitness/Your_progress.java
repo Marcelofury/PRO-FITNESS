@@ -1,6 +1,7 @@
 package com.example.profitness;
 
 import android.content.Intent;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class Your_progress extends AppCompatActivity {
@@ -35,6 +38,7 @@ public class Your_progress extends AppCompatActivity {
     private View barWeek2;
     private View barWeek3;
     private View barWeek4;
+    private TextView tvProgressFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +58,16 @@ public class Your_progress extends AppCompatActivity {
         barWeek2 = findViewById(R.id.bar_week_2);
         barWeek3 = findViewById(R.id.bar_week_3);
         barWeek4 = findViewById(R.id.bar_week_4);
+        tvProgressFilter = findViewById(R.id.tv_progress_filter);
 
         tvStrengthValue.setText("No sessions yet");
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+        findViewById(R.id.btn_calendar).setOnClickListener(v -> showCalendarPicker());
+        findViewById(R.id.btn_week).setOnClickListener(v -> applyRangeLabel("Week"));
+        findViewById(R.id.btn_month).setOnClickListener(v -> applyRangeLabel("Month"));
+        findViewById(R.id.btn_quarter).setOnClickListener(v -> applyRangeLabel("3 Months"));
+        findViewById(R.id.btn_year).setOnClickListener(v -> applyRangeLabel("Year"));
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         BottomNavHelper.setup(this, nav, R.id.nav_progress);
@@ -70,6 +80,29 @@ public class Your_progress extends AppCompatActivity {
         );
 
         loadProfileMetrics();
+        loadProgressSummary();
+    }
+
+    private void showCalendarPicker() {
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dialog = new DatePickerDialog(
+                this,
+                (view, year, month, dayOfMonth) -> {
+                    Calendar selected = Calendar.getInstance();
+                    selected.set(year, month, dayOfMonth);
+                    String formatted = new SimpleDateFormat("dd MMM yyyy", Locale.US).format(selected.getTime());
+                    tvProgressFilter.setText("Showing from: " + formatted);
+                    Toast.makeText(this, "Selected " + formatted, Toast.LENGTH_SHORT).show();
+                },
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        dialog.show();
+    }
+
+    private void applyRangeLabel(String range) {
+        tvProgressFilter.setText("Showing: " + range);
         loadProgressSummary();
     }
 

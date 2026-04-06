@@ -13,6 +13,7 @@ import com.example.profitness.network.AuthSessionHelper;
 import com.example.profitness.network.ProFitnessApi;
 import com.example.profitness.network.TokenStore;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -25,6 +26,10 @@ public class Elite_plan extends AppCompatActivity {
     private TextView tvDayFocusDuration;
     private TextView tvPlanExercise;
     private TextView tvPlanSets;
+    private TabLayout tabPlanDays;
+    private int weeklyMinutesCached = 0;
+    private int weeklyWorkoutsCached = 0;
+    private final String[] dayLabels = new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class Elite_plan extends AppCompatActivity {
         tvDayFocusDuration = findViewById(R.id.tv_day_focus_duration);
         tvPlanExercise = findViewById(R.id.tv_plan_exercise);
         tvPlanSets = findViewById(R.id.tv_plan_sets);
+        tabPlanDays = findViewById(R.id.tab_plan_days);
 
         findViewById(R.id.btn_back).setOnClickListener(v -> finish());
         findViewById(R.id.btn_start_workout).setOnClickListener(v ->
@@ -51,6 +57,21 @@ public class Elite_plan extends AppCompatActivity {
 
         BottomNavigationView nav = findViewById(R.id.bottom_navigation);
         BottomNavHelper.setup(this, nav, R.id.nav_progress);
+
+        tabPlanDays.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                applyDayPlan(tab != null ? tab.getPosition() : 0);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                applyDayPlan(tab != null ? tab.getPosition() : 0);
+            }
+        });
 
         loadPlanData();
     }
@@ -92,17 +113,10 @@ public class Elite_plan extends AppCompatActivity {
                     JsonObject data = result != null && result.has("data") && result.get("data").isJsonObject()
                             ? result.getAsJsonObject("data")
                             : null;
-                    int weeklyMinutes = data != null && data.has("weeklyWorkoutMinutes") ? data.get("weeklyWorkoutMinutes").getAsInt() : 0;
-                    int weeklyWorkouts = data != null && data.has("weeklyWorkoutsCount") ? data.get("weeklyWorkoutsCount").getAsInt() : 0;
-
-                    if (weeklyWorkouts > 0) {
-                        int estimatedMinutes = Math.max(1, weeklyMinutes / weeklyWorkouts);
-                        tvDayFocusTitle.setText("Next Session - Progressive Focus");
-                        tvDayFocusDuration.setText("Estimated Duration: " + estimatedMinutes + " mins");
-                    } else {
-                        tvDayFocusTitle.setText("Start your first workout to build a plan");
-                        tvDayFocusDuration.setText("Estimated Duration: --");
-                    }
+                    weeklyMinutesCached = optInt(data, "weeklyWorkoutMinutes", 0);
+                    weeklyWorkoutsCached = optInt(data, "weeklyWorkoutsCount", 0);
+                    int selectedDay = tabPlanDays.getSelectedTabPosition() >= 0 ? tabPlanDays.getSelectedTabPosition() : 0;
+                    applyDayPlan(selectedDay);
 
                     JsonArray recentWorkouts = data != null && data.has("recentWorkouts") && data.get("recentWorkouts").isJsonArray()
                             ? data.getAsJsonArray("recentWorkouts")
@@ -139,5 +153,30 @@ public class Elite_plan extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void applyDayPlan(int dayIndex) {
+        int safeIndex = Math.max(0, Math.min(dayLabels.length - 1, dayIndex));
+        String dayLabel = dayLabels[safeIndex];
+
+        if (weeklyWorkoutsCached > 0) {
+            int estimatedMinutes = Math.max(1, weeklyMinutesCached / weeklyWorkoutsCached);
+            tvDayFocusTitle.setText(dayLabel + " - Progressive Focus");
+            tvDayFocusDuration.setText("Estimated Duration: " + estimatedMinutes + " mins");
+        } else {
+            tvDayFocusTitle.setText(dayLabel + " - Start your first workout");
+            tvDayFocusDuration.setText("Estimated Duration: --");
+        }
+    }
+
+    private int optInt(JsonObject source, String key, int fallback) {
+        if (source == null || !source.has(key) || source.get(key).isJsonNull()) {
+            return fallback;
+        }
+        try {
+            return source.get(key).getAsInt();
+        } catch (Exception ignored) {
+            return fallback;
+        }
     }
 }
