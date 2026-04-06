@@ -60,10 +60,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 app:singleSelection="true">
-                <Button android:id="@+id/btn_week" style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_weight="1" android:text="Week" android:textColor="@color/white" app:backgroundTint="@color/neon_cyan"/>
-                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_weight="1" android:text="Month" android:textColor="@color/text_gray"/>
-                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_weight="1" android:text="3 Months" android:textColor="@color/text_gray"/>
-                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_weight="1" android:text="Year" android:textColor="@color/text_gray"/>
+                <Button android:id="@+id/btn_week" style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Week" android:textColor="@color/white" app:backgroundTint="@color/neon_cyan"/>
+                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Month" android:textColor="@color/text_gray"/>
+                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="3 Months" android:textColor="@color/text_gray"/>
+                <Button style="?attr/materialButtonOutlinedStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Year" android:textColor="@color/text_gray"/>
             </com.google.android.material.button.MaterialButtonToggleGroup>
 
             <com.google.android.material.card.MaterialCardView
